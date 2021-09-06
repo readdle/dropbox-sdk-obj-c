@@ -5,7 +5,7 @@ Pod::Spec.new do |s|
   s.homepage     = 'https://www.dropbox.com/developers'
   s.license      = 'MIT'
   s.author       = { 'Stephen Cobbe' => 'scobbe@dropbox.com' }
-  s.source       = { :git => 'https://github.com/dropbox/dropbox-sdk-obj-c.git', :tag => s.version }
+  s.source       = { :git => 'https://github.com/readdle/dropbox-sdk-obj-c.git', :tag => s.version }
   
   s.source_files = 'Source/ObjectiveDropboxOfficial/Shared/**/*.{h,m}', 'Source/ObjectiveDropboxOfficial/Headers/**/*.h'
   s.osx.source_files =  'Source/ObjectiveDropboxOfficial/Platform/ObjectiveDropboxOfficial_macOS/**/*.{h,m}'

@@ -8,65 +8,63 @@
 
 #import "DBSerializableProtocol.h"
 
-@class DBSHARINGResolvedVisibility;
+@class DBSHARINGAlphaResolvedVisibility;
 
 NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - API Object
 
 ///
-/// The `ResolvedVisibility` union.
+/// The `AlphaResolvedVisibility` union.
 ///
-/// The actual access permissions values of shared links after taking into
-/// account user preferences and the team and shared folder settings. Check the
-/// RequestedVisibility for more info on the possible visibility values that can
-/// be set by the shared link's owner.
+/// check documentation for ResolvedVisibility.
 ///
 /// This class implements the `DBSerializable` protocol (serialize and
 /// deserialize instance methods), which is required for all Obj-C SDK API route
 /// objects.
 ///
-@interface DBSHARINGResolvedVisibility : NSObject <DBSerializable, NSCopying>
+@interface DBSHARINGAlphaResolvedVisibility : NSObject <DBSerializable, NSCopying>
 
 #pragma mark - Instance fields
 
-/// The `DBSHARINGResolvedVisibilityTag` enum type represents the possible tag
-/// states with which the `DBSHARINGResolvedVisibility` union can exist.
-typedef NS_CLOSED_ENUM(NSInteger, DBSHARINGResolvedVisibilityTag){
+/// The `DBSHARINGAlphaResolvedVisibilityTag` enum type represents the possible
+/// tag states with which the `DBSHARINGAlphaResolvedVisibility` union can
+/// exist.
+typedef NS_CLOSED_ENUM(NSInteger, DBSHARINGAlphaResolvedVisibilityTag){
     /// Anyone who has received the link can access it. No login required.
-    DBSHARINGResolvedVisibilityPublic,
+    DBSHARINGAlphaResolvedVisibilityPublic,
 
     /// Only members of the same team can access the link. Login is required.
-    DBSHARINGResolvedVisibilityTeamOnly,
+    DBSHARINGAlphaResolvedVisibilityTeamOnly,
 
     /// A link-specific password is required to access the link. Login is not
     /// required.
-    DBSHARINGResolvedVisibilityPassword,
+    DBSHARINGAlphaResolvedVisibilityPassword,
 
     /// Only members of the same team who have the link-specific password can
     /// access the link. Login is required.
-    DBSHARINGResolvedVisibilityTeamAndPassword,
+    DBSHARINGAlphaResolvedVisibilityTeamAndPassword,
 
     /// Only members of the shared folder containing the linked file can access
     /// the link. Login is required.
-    DBSHARINGResolvedVisibilitySharedFolderOnly,
+    DBSHARINGAlphaResolvedVisibilitySharedFolderOnly,
 
     /// The link merely points the user to the content, and does not grant any
     /// additional rights. Existing members of the content who use this link can
     /// only access the content with their pre-existing access rights. Either on
     /// the file directly, or inherited from a parent folder.
-    DBSHARINGResolvedVisibilityNoOne,
+    DBSHARINGAlphaResolvedVisibilityNoOne,
 
     /// Only the current user can view this link.
-    DBSHARINGResolvedVisibilityOnlyYou,
+    DBSHARINGAlphaResolvedVisibilityOnlyYou,
 
     /// (no description).
-    DBSHARINGResolvedVisibilityOther,
+    DBSHARINGAlphaResolvedVisibilityOther,
 
 };
 
 /// Represents the union's current tag state.
-@property (nonatomic, readonly) DBSHARINGResolvedVisibilityTag tag;
+@property (nonatomic, readonly) DBSHARINGAlphaResolvedVisibilityTag tag;
 
 #pragma mark - Constructors
 
@@ -227,29 +225,30 @@ typedef NS_CLOSED_ENUM(NSInteger, DBSHARINGResolvedVisibilityTag){
 #pragma mark - Serializer Object
 
 ///
-/// The serialization class for the `DBSHARINGResolvedVisibility` union.
+/// The serialization class for the `DBSHARINGAlphaResolvedVisibility` union.
 ///
-@interface DBSHARINGResolvedVisibilitySerializer : NSObject
+@interface DBSHARINGAlphaResolvedVisibilitySerializer : NSObject
 
 ///
-/// Serializes `DBSHARINGResolvedVisibility` instances.
+/// Serializes `DBSHARINGAlphaResolvedVisibility` instances.
 ///
-/// @param instance An instance of the `DBSHARINGResolvedVisibility` API object.
+/// @param instance An instance of the `DBSHARINGAlphaResolvedVisibility` API
+/// object.
 ///
 /// @return A json-compatible dictionary representation of the
-/// `DBSHARINGResolvedVisibility` API object.
+/// `DBSHARINGAlphaResolvedVisibility` API object.
 ///
-+ (nullable NSDictionary<NSString *, id> *)serialize:(DBSHARINGResolvedVisibility *)instance;
++ (nullable NSDictionary<NSString *, id> *)serialize:(DBSHARINGAlphaResolvedVisibility *)instance;
 
 ///
-/// Deserializes `DBSHARINGResolvedVisibility` instances.
+/// Deserializes `DBSHARINGAlphaResolvedVisibility` instances.
 ///
 /// @param dict A json-compatible dictionary representation of the
-/// `DBSHARINGResolvedVisibility` API object.
+/// `DBSHARINGAlphaResolvedVisibility` API object.
 ///
-/// @return An instantiation of the `DBSHARINGResolvedVisibility` object.
+/// @return An instantiation of the `DBSHARINGAlphaResolvedVisibility` object.
 ///
-+ (DBSHARINGResolvedVisibility *)deserialize:(NSDictionary<NSString *, id> *)dict;
++ (DBSHARINGAlphaResolvedVisibility *)deserialize:(NSDictionary<NSString *, id> *)dict;
 
 @end
 

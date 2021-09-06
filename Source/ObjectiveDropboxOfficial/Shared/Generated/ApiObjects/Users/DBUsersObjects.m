@@ -542,8 +542,8 @@
 #import "DBUSERSAccount.h"
 #import "DBUSERSCOMMONAccountType.h"
 #import "DBUSERSFullAccount.h"
-#import "DBUSERSFullTeam.h"
 #import "DBUSERSName.h"
+#import "DBUSERSTeam.h"
 
 #pragma mark - API Object
 
@@ -563,7 +563,7 @@
                          rootInfo:(DBCOMMONRootInfo *)rootInfo
                   profilePhotoUrl:(NSString *)profilePhotoUrl
                           country:(NSString *)country
-                             team:(DBUSERSFullTeam *)team
+                             team:(DBUSERSTeam *)team
                      teamMemberId:(NSString *)teamMemberId {
   [DBStoneValidators nonnullValidator:[DBStoneValidators stringValidator:@(40) maxLength:@(40) pattern:nil]](accountId);
   [DBStoneValidators nonnullValidator:nil](name);
@@ -773,7 +773,7 @@
     jsonDict[@"country"] = valueObj.country;
   }
   if (valueObj.team) {
-    jsonDict[@"team"] = [DBUSERSFullTeamSerializer serialize:valueObj.team];
+    jsonDict[@"team"] = [DBUSERSTeamSerializer serialize:valueObj.team];
   }
   if (valueObj.teamMemberId) {
     jsonDict[@"team_member_id"] = valueObj.teamMemberId;
@@ -795,7 +795,7 @@
   DBCOMMONRootInfo *rootInfo = [DBCOMMONRootInfoSerializer deserialize:valueDict[@"root_info"]];
   NSString *profilePhotoUrl = valueDict[@"profile_photo_url"] ?: nil;
   NSString *country = valueDict[@"country"] ?: nil;
-  DBUSERSFullTeam *team = valueDict[@"team"] ? [DBUSERSFullTeamSerializer deserialize:valueDict[@"team"]] : nil;
+  DBUSERSTeam *team = valueDict[@"team"] ? [DBUSERSTeamSerializer deserialize:valueDict[@"team"]] : nil;
   NSString *teamMemberId = valueDict[@"team_member_id"] ?: nil;
 
   return [[DBUSERSFullAccount alloc] initWithAccountId:accountId
@@ -812,245 +812,6 @@
                                                country:country
                                                   team:team
                                           teamMemberId:teamMemberId];
-}
-
-@end
-
-#import "DBStoneSerializers.h"
-#import "DBStoneValidators.h"
-#import "DBUSERSTeam.h"
-
-#pragma mark - API Object
-
-@implementation DBUSERSTeam
-
-#pragma mark - Constructors
-
-- (instancetype)initWithId_:(NSString *)id_ name:(NSString *)name {
-  [DBStoneValidators nonnullValidator:nil](id_);
-  [DBStoneValidators nonnullValidator:nil](name);
-
-  self = [super init];
-  if (self) {
-    _id_ = id_;
-    _name = name;
-  }
-  return self;
-}
-
-#pragma mark - Serialization methods
-
-+ (nullable NSDictionary<NSString *, id> *)serialize:(id)instance {
-  return [DBUSERSTeamSerializer serialize:instance];
-}
-
-+ (id)deserialize:(NSDictionary<NSString *, id> *)dict {
-  return [DBUSERSTeamSerializer deserialize:dict];
-}
-
-#pragma mark - Debug Description method
-
-- (NSString *)debugDescription {
-  return [[DBUSERSTeamSerializer serialize:self] description];
-}
-
-#pragma mark - Copyable method
-
-- (instancetype)copyWithZone:(NSZone *)zone {
-#pragma unused(zone)
-  /// object is immutable
-  return self;
-}
-
-#pragma mark - Hash method
-
-- (NSUInteger)hash {
-  NSUInteger prime = 31;
-  NSUInteger result = 1;
-
-  result = prime * result + [self.id_ hash];
-  result = prime * result + [self.name hash];
-
-  return prime * result;
-}
-
-#pragma mark - Equality method
-
-- (BOOL)isEqual:(id)other {
-  if (other == self) {
-    return YES;
-  }
-  if (!other || ![other isKindOfClass:[self class]]) {
-    return NO;
-  }
-  return [self isEqualToTeam:other];
-}
-
-- (BOOL)isEqualToTeam:(DBUSERSTeam *)aTeam {
-  if (self == aTeam) {
-    return YES;
-  }
-  if (![self.id_ isEqual:aTeam.id_]) {
-    return NO;
-  }
-  if (![self.name isEqual:aTeam.name]) {
-    return NO;
-  }
-  return YES;
-}
-
-@end
-
-#pragma mark - Serializer Object
-
-@implementation DBUSERSTeamSerializer
-
-+ (NSDictionary<NSString *, id> *)serialize:(DBUSERSTeam *)valueObj {
-  NSMutableDictionary *jsonDict = [[NSMutableDictionary alloc] init];
-
-  jsonDict[@"id"] = valueObj.id_;
-  jsonDict[@"name"] = valueObj.name;
-
-  return [jsonDict count] > 0 ? jsonDict : nil;
-}
-
-+ (DBUSERSTeam *)deserialize:(NSDictionary<NSString *, id> *)valueDict {
-  NSString *id_ = valueDict[@"id"];
-  NSString *name = valueDict[@"name"];
-
-  return [[DBUSERSTeam alloc] initWithId_:id_ name:name];
-}
-
-@end
-
-#import "DBStoneSerializers.h"
-#import "DBStoneValidators.h"
-#import "DBTEAMPOLICIESOfficeAddInPolicy.h"
-#import "DBTEAMPOLICIESTeamSharingPolicies.h"
-#import "DBUSERSFullTeam.h"
-#import "DBUSERSTeam.h"
-
-#pragma mark - API Object
-
-@implementation DBUSERSFullTeam
-
-#pragma mark - Constructors
-
-- (instancetype)initWithId_:(NSString *)id_
-                       name:(NSString *)name
-            sharingPolicies:(DBTEAMPOLICIESTeamSharingPolicies *)sharingPolicies
-          officeAddinPolicy:(DBTEAMPOLICIESOfficeAddInPolicy *)officeAddinPolicy {
-  [DBStoneValidators nonnullValidator:nil](id_);
-  [DBStoneValidators nonnullValidator:nil](name);
-  [DBStoneValidators nonnullValidator:nil](sharingPolicies);
-  [DBStoneValidators nonnullValidator:nil](officeAddinPolicy);
-
-  self = [super initWithId_:id_ name:name];
-  if (self) {
-    _sharingPolicies = sharingPolicies;
-    _officeAddinPolicy = officeAddinPolicy;
-  }
-  return self;
-}
-
-#pragma mark - Serialization methods
-
-+ (nullable NSDictionary<NSString *, id> *)serialize:(id)instance {
-  return [DBUSERSFullTeamSerializer serialize:instance];
-}
-
-+ (id)deserialize:(NSDictionary<NSString *, id> *)dict {
-  return [DBUSERSFullTeamSerializer deserialize:dict];
-}
-
-#pragma mark - Debug Description method
-
-- (NSString *)debugDescription {
-  return [[DBUSERSFullTeamSerializer serialize:self] description];
-}
-
-#pragma mark - Copyable method
-
-- (instancetype)copyWithZone:(NSZone *)zone {
-#pragma unused(zone)
-  /// object is immutable
-  return self;
-}
-
-#pragma mark - Hash method
-
-- (NSUInteger)hash {
-  NSUInteger prime = 31;
-  NSUInteger result = 1;
-
-  result = prime * result + [self.id_ hash];
-  result = prime * result + [self.name hash];
-  result = prime * result + [self.sharingPolicies hash];
-  result = prime * result + [self.officeAddinPolicy hash];
-
-  return prime * result;
-}
-
-#pragma mark - Equality method
-
-- (BOOL)isEqual:(id)other {
-  if (other == self) {
-    return YES;
-  }
-  if (!other || ![other isKindOfClass:[self class]]) {
-    return NO;
-  }
-  return [self isEqualToFullTeam:other];
-}
-
-- (BOOL)isEqualToFullTeam:(DBUSERSFullTeam *)aFullTeam {
-  if (self == aFullTeam) {
-    return YES;
-  }
-  if (![self.id_ isEqual:aFullTeam.id_]) {
-    return NO;
-  }
-  if (![self.name isEqual:aFullTeam.name]) {
-    return NO;
-  }
-  if (![self.sharingPolicies isEqual:aFullTeam.sharingPolicies]) {
-    return NO;
-  }
-  if (![self.officeAddinPolicy isEqual:aFullTeam.officeAddinPolicy]) {
-    return NO;
-  }
-  return YES;
-}
-
-@end
-
-#pragma mark - Serializer Object
-
-@implementation DBUSERSFullTeamSerializer
-
-+ (NSDictionary<NSString *, id> *)serialize:(DBUSERSFullTeam *)valueObj {
-  NSMutableDictionary *jsonDict = [[NSMutableDictionary alloc] init];
-
-  jsonDict[@"id"] = valueObj.id_;
-  jsonDict[@"name"] = valueObj.name;
-  jsonDict[@"sharing_policies"] = [DBTEAMPOLICIESTeamSharingPoliciesSerializer serialize:valueObj.sharingPolicies];
-  jsonDict[@"office_addin_policy"] = [DBTEAMPOLICIESOfficeAddInPolicySerializer serialize:valueObj.officeAddinPolicy];
-
-  return [jsonDict count] > 0 ? jsonDict : nil;
-}
-
-+ (DBUSERSFullTeam *)deserialize:(NSDictionary<NSString *, id> *)valueDict {
-  NSString *id_ = valueDict[@"id"];
-  NSString *name = valueDict[@"name"];
-  DBTEAMPOLICIESTeamSharingPolicies *sharingPolicies =
-      [DBTEAMPOLICIESTeamSharingPoliciesSerializer deserialize:valueDict[@"sharing_policies"]];
-  DBTEAMPOLICIESOfficeAddInPolicy *officeAddinPolicy =
-      [DBTEAMPOLICIESOfficeAddInPolicySerializer deserialize:valueDict[@"office_addin_policy"]];
-
-  return [[DBUSERSFullTeam alloc] initWithId_:id_
-                                         name:name
-                              sharingPolicies:sharingPolicies
-                            officeAddinPolicy:officeAddinPolicy];
 }
 
 @end
@@ -2296,6 +2057,113 @@
   DBUSERSSpaceAllocation *allocation = [DBUSERSSpaceAllocationSerializer deserialize:valueDict[@"allocation"]];
 
   return [[DBUSERSSpaceUsage alloc] initWithUsed:used allocation:allocation];
+}
+
+@end
+
+#import "DBStoneSerializers.h"
+#import "DBStoneValidators.h"
+#import "DBUSERSTeam.h"
+
+#pragma mark - API Object
+
+@implementation DBUSERSTeam
+
+#pragma mark - Constructors
+
+- (instancetype)initWithId_:(NSString *)id_ name:(NSString *)name {
+  [DBStoneValidators nonnullValidator:nil](id_);
+  [DBStoneValidators nonnullValidator:nil](name);
+
+  self = [super init];
+  if (self) {
+    _id_ = id_;
+    _name = name;
+  }
+  return self;
+}
+
+#pragma mark - Serialization methods
+
++ (nullable NSDictionary<NSString *, id> *)serialize:(id)instance {
+  return [DBUSERSTeamSerializer serialize:instance];
+}
+
++ (id)deserialize:(NSDictionary<NSString *, id> *)dict {
+  return [DBUSERSTeamSerializer deserialize:dict];
+}
+
+#pragma mark - Debug Description method
+
+- (NSString *)debugDescription {
+  return [[DBUSERSTeamSerializer serialize:self] description];
+}
+
+#pragma mark - Copyable method
+
+- (instancetype)copyWithZone:(NSZone *)zone {
+#pragma unused(zone)
+  /// object is immutable
+  return self;
+}
+
+#pragma mark - Hash method
+
+- (NSUInteger)hash {
+  NSUInteger prime = 31;
+  NSUInteger result = 1;
+
+  result = prime * result + [self.id_ hash];
+  result = prime * result + [self.name hash];
+
+  return prime * result;
+}
+
+#pragma mark - Equality method
+
+- (BOOL)isEqual:(id)other {
+  if (other == self) {
+    return YES;
+  }
+  if (!other || ![other isKindOfClass:[self class]]) {
+    return NO;
+  }
+  return [self isEqualToTeam:other];
+}
+
+- (BOOL)isEqualToTeam:(DBUSERSTeam *)aTeam {
+  if (self == aTeam) {
+    return YES;
+  }
+  if (![self.id_ isEqual:aTeam.id_]) {
+    return NO;
+  }
+  if (![self.name isEqual:aTeam.name]) {
+    return NO;
+  }
+  return YES;
+}
+
+@end
+
+#pragma mark - Serializer Object
+
+@implementation DBUSERSTeamSerializer
+
++ (NSDictionary<NSString *, id> *)serialize:(DBUSERSTeam *)valueObj {
+  NSMutableDictionary *jsonDict = [[NSMutableDictionary alloc] init];
+
+  jsonDict[@"id"] = valueObj.id_;
+  jsonDict[@"name"] = valueObj.name;
+
+  return [jsonDict count] > 0 ? jsonDict : nil;
+}
+
++ (DBUSERSTeam *)deserialize:(NSDictionary<NSString *, id> *)valueDict {
+  NSString *id_ = valueDict[@"id"];
+  NSString *name = valueDict[@"name"];
+
+  return [[DBUSERSTeam alloc] initWithId_:id_ name:name];
 }
 
 @end

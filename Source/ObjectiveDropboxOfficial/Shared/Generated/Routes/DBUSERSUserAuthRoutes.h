@@ -13,12 +13,12 @@
 @class DBUSERSBasicAccount;
 @class DBUSERSCOMMONAccountType;
 @class DBUSERSFullAccount;
-@class DBUSERSFullTeam;
 @class DBUSERSGetAccountBatchError;
 @class DBUSERSGetAccountError;
 @class DBUSERSName;
 @class DBUSERSSpaceAllocation;
 @class DBUSERSSpaceUsage;
+@class DBUSERSTeam;
 @class DBUSERSUserFeature;
 @class DBUSERSUserFeatureValue;
 @class DBUSERSUserFeaturesGetValuesBatchError;

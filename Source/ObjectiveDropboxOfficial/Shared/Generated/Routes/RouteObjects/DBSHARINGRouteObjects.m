@@ -102,7 +102,6 @@
 
 static DBRoute *DBSHARINGAddFileMember;
 static DBRoute *DBSHARINGAddFolderMember;
-static DBRoute *DBSHARINGChangeFileMemberAccess;
 static DBRoute *DBSHARINGCheckJobStatus;
 static DBRoute *DBSHARINGCheckRemoveMemberJobStatus;
 static DBRoute *DBSHARINGCheckShareJobStatus;
@@ -183,24 +182,6 @@ static DBRoute *DBSHARINGUpdateFolderPolicy;
                              dataStructDeserialBlock:nil];
   }
   return DBSHARINGAddFolderMember;
-}
-
-+ (DBRoute *)DBSHARINGChangeFileMemberAccess {
-  if (!DBSHARINGChangeFileMemberAccess) {
-    DBSHARINGChangeFileMemberAccess = [[DBRoute alloc] init:@"change_file_member_access"
-                                                 namespace_:@"sharing"
-                                                 deprecated:@YES
-                                                 resultType:[DBSHARINGFileMemberActionResult class]
-                                                  errorType:[DBSHARINGFileMemberActionError class]
-                                                      attrs:@{
-                                                        @"auth" : @"user",
-                                                        @"host" : @"api",
-                                                        @"style" : @"rpc"
-                                                      }
-                                      dataStructSerialBlock:nil
-                                    dataStructDeserialBlock:nil];
-  }
-  return DBSHARINGChangeFileMemberAccess;
 }
 
 + (DBRoute *)DBSHARINGCheckJobStatus {

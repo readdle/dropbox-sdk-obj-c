@@ -12,8 +12,8 @@
 @class DBCOMMONRootInfo;
 @class DBUSERSCOMMONAccountType;
 @class DBUSERSFullAccount;
-@class DBUSERSFullTeam;
 @class DBUSERSName;
+@class DBUSERSTeam;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -44,7 +44,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly, copy) NSString *referralLink;
 
 /// If this account is a member of a team, information about that team.
-@property (nonatomic, readonly, nullable) DBUSERSFullTeam *team;
+@property (nonatomic, readonly, nullable) DBUSERSTeam *team;
 
 /// This account's unique team member id. This field will only be present if
 /// team is present.
@@ -105,7 +105,7 @@ NS_ASSUME_NONNULL_BEGIN
                          rootInfo:(DBCOMMONRootInfo *)rootInfo
                   profilePhotoUrl:(nullable NSString *)profilePhotoUrl
                           country:(nullable NSString *)country
-                             team:(nullable DBUSERSFullTeam *)team
+                             team:(nullable DBUSERSTeam *)team
                      teamMemberId:(nullable NSString *)teamMemberId;
 
 ///

@@ -61,16 +61,16 @@ static NSString *kStorageKeyPrefix = @"dbxOpenWith";
 
 - (id)initWithCoder:(NSCoder *)decoder {
   if (self = [super init]) {
-    _userId = [decoder decodeObjectForKey:@"userId"];
-    _rev = [decoder decodeObjectForKey:@"rev"];
-    _path = [decoder decodeObjectForKey:@"path"];
-    _modifiedTime = [decoder decodeObjectForKey:@"modifiedTime"];
+    _userId = [decoder decodeObjectOfClass:NSString.class forKey:@"userId"];
+    _rev = [decoder decodeObjectOfClass:NSString.class forKey:@"rev"];
+    _path = [decoder decodeObjectOfClass:NSString.class forKey:@"path"];
+    _modifiedTime = [decoder decodeObjectOfClass:NSDate.class forKey:@"modifiedTime"];
     _readOnly = [decoder decodeBoolForKey:@"readOnly"];
-    _verb = [decoder decodeObjectForKey:@"verb"];
-    _sessionId = [decoder decodeObjectForKey:@"sessionId"];
-    _fileId = [decoder decodeObjectForKey:@"fileId"];
+    _verb = [decoder decodeObjectOfClass:NSString.class forKey:@"verb"];
+    _sessionId = [decoder decodeObjectOfClass:NSString.class forKey:@"sessionId"];
+    _fileId = [decoder decodeObjectOfClass:NSString.class forKey:@"fileId"];
     // fileData is excluded
-    _sourceApp = [decoder decodeObjectForKey:@"sourceApp"];
+    _sourceApp = [decoder decodeObjectOfClass:NSString.class forKey:@"sourceApp"];
   }
   return self;
 }

@@ -424,7 +424,10 @@ static const char *kV1OSXAccountName = "Dropbox";
     }
 
     dispatch_group_enter(tokenConvertGroup);
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
     [[appAuthClient.authRoutes tokenFromOauth1:accessToken oauth1TokenSecret:accessTokenSecret]
+#pragma clang diagnostic pop
         setResponseBlock:^(DBAUTHTokenFromOAuth1Result *result, DBAUTHTokenFromOAuth1Error *routeError,
                            DBRequestError *error) {
 #pragma unused(routeError)

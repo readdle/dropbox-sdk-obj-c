@@ -224,6 +224,14 @@
   return self;
 }
 
+- (instancetype)initWithTraverse {
+  self = [super init];
+  if (self) {
+    _tag = DBSHARINGAccessLevelTraverse;
+  }
+  return self;
+}
+
 - (instancetype)initWithOther {
   self = [super init];
   if (self) {
@@ -252,6 +260,10 @@
   return _tag == DBSHARINGAccessLevelViewerNoComment;
 }
 
+- (BOOL)isTraverse {
+  return _tag == DBSHARINGAccessLevelTraverse;
+}
+
 - (BOOL)isOther {
   return _tag == DBSHARINGAccessLevelOther;
 }
@@ -266,6 +278,8 @@
     return @"DBSHARINGAccessLevelViewer";
   case DBSHARINGAccessLevelViewerNoComment:
     return @"DBSHARINGAccessLevelViewerNoComment";
+  case DBSHARINGAccessLevelTraverse:
+    return @"DBSHARINGAccessLevelTraverse";
   case DBSHARINGAccessLevelOther:
     return @"DBSHARINGAccessLevelOther";
   }
@@ -316,6 +330,9 @@
   case DBSHARINGAccessLevelViewerNoComment:
     result = prime * result + [[self tagName] hash];
     break;
+  case DBSHARINGAccessLevelTraverse:
+    result = prime * result + [[self tagName] hash];
+    break;
   case DBSHARINGAccessLevelOther:
     result = prime * result + [[self tagName] hash];
     break;
@@ -352,6 +369,8 @@
     return [[self tagName] isEqual:[anAccessLevel tagName]];
   case DBSHARINGAccessLevelViewerNoComment:
     return [[self tagName] isEqual:[anAccessLevel tagName]];
+  case DBSHARINGAccessLevelTraverse:
+    return [[self tagName] isEqual:[anAccessLevel tagName]];
   case DBSHARINGAccessLevelOther:
     return [[self tagName] isEqual:[anAccessLevel tagName]];
   }
@@ -375,6 +394,8 @@
     jsonDict[@".tag"] = @"viewer";
   } else if ([valueObj isViewerNoComment]) {
     jsonDict[@".tag"] = @"viewer_no_comment";
+  } else if ([valueObj isTraverse]) {
+    jsonDict[@".tag"] = @"traverse";
   } else if ([valueObj isOther]) {
     jsonDict[@".tag"] = @"other";
   } else {
@@ -395,6 +416,8 @@
     return [[DBSHARINGAccessLevel alloc] initWithViewer];
   } else if ([tag isEqualToString:@"viewer_no_comment"]) {
     return [[DBSHARINGAccessLevel alloc] initWithViewerNoComment];
+  } else if ([tag isEqualToString:@"traverse"]) {
+    return [[DBSHARINGAccessLevel alloc] initWithTraverse];
   } else if ([tag isEqualToString:@"other"]) {
     return [[DBSHARINGAccessLevel alloc] initWithOther];
   } else {
@@ -5961,7 +5984,8 @@
         [[DBSHARINGSharingFileAccessErrorSerializer serialize:valueObj.accessError] mutableCopy];
     jsonDict[@".tag"] = @"access_error";
   } else if ([valueObj isNoExplicitAccess]) {
-    jsonDict = [[DBSHARINGMemberAccessLevelResultSerializer serialize:valueObj.noExplicitAccess] mutableCopy];
+    [jsonDict
+        addEntriesFromDictionary:[DBSHARINGMemberAccessLevelResultSerializer serialize:valueObj.noExplicitAccess]];
     jsonDict[@".tag"] = @"no_explicit_access";
   } else if ([valueObj isOther]) {
     jsonDict[@".tag"] = @"other";
@@ -6205,16 +6229,29 @@
 #pragma mark - Constructors
 
 - (instancetype)initWithMember:(DBSHARINGMemberSelector *)member
-                        result:(DBSHARINGFileMemberActionIndividualResult *)result {
+                        result:(DBSHARINGFileMemberActionIndividualResult *)result
+                     sckeySha1:(NSString *)sckeySha1
+           invitationSignature:(NSArray<NSString *> *)invitationSignature {
   [DBStoneValidators nonnullValidator:nil](member);
   [DBStoneValidators nonnullValidator:nil](result);
+  [DBStoneValidators
+   nullableValidator:[DBStoneValidators arrayValidator:nil
+                                              maxItems:nil
+                                         itemValidator:[DBStoneValidators nonnullValidator:nil]]](invitationSignature);
 
   self = [super init];
   if (self) {
     _member = member;
     _result = result;
+    _sckeySha1 = sckeySha1;
+    _invitationSignature = invitationSignature;
   }
   return self;
+}
+
+- (instancetype)initWithMember:(DBSHARINGMemberSelector *)member
+                        result:(DBSHARINGFileMemberActionIndividualResult *)result {
+  return [self initWithMember:member result:result sckeySha1:nil invitationSignature:nil];
 }
 
 #pragma mark - Serialization methods
@@ -6249,6 +6286,12 @@
 
   result = prime * result + [self.member hash];
   result = prime * result + [self.result hash];
+  if (self.sckeySha1 != nil) {
+    result = prime * result + [self.sckeySha1 hash];
+  }
+  if (self.invitationSignature != nil) {
+    result = prime * result + [self.invitationSignature hash];
+  }
 
   return prime * result;
 }
@@ -6275,6 +6318,16 @@
   if (![self.result isEqual:aFileMemberActionResult.result]) {
     return NO;
   }
+  if (self.sckeySha1) {
+    if (![self.sckeySha1 isEqual:aFileMemberActionResult.sckeySha1]) {
+      return NO;
+    }
+  }
+  if (self.invitationSignature) {
+    if (![self.invitationSignature isEqual:aFileMemberActionResult.invitationSignature]) {
+      return NO;
+    }
+  }
   return YES;
 }
 
@@ -6289,6 +6342,15 @@
 
   jsonDict[@"member"] = [DBSHARINGMemberSelectorSerializer serialize:valueObj.member];
   jsonDict[@"result"] = [DBSHARINGFileMemberActionIndividualResultSerializer serialize:valueObj.result];
+  if (valueObj.sckeySha1) {
+    jsonDict[@"sckey_sha1"] = valueObj.sckeySha1;
+  }
+  if (valueObj.invitationSignature) {
+    jsonDict[@"invitation_signature"] = [DBArraySerializer serialize:valueObj.invitationSignature
+                                                           withBlock:^id(id elem0) {
+                                                             return elem0;
+                                                           }];
+  }
 
   return [jsonDict count] > 0 ? jsonDict : nil;
 }
@@ -6297,8 +6359,18 @@
   DBSHARINGMemberSelector *member = [DBSHARINGMemberSelectorSerializer deserialize:valueDict[@"member"]];
   DBSHARINGFileMemberActionIndividualResult *result =
       [DBSHARINGFileMemberActionIndividualResultSerializer deserialize:valueDict[@"result"]];
+  NSString *sckeySha1 = valueDict[@"sckey_sha1"] ?: nil;
+  NSArray<NSString *> *invitationSignature = valueDict[@"invitation_signature"]
+                                                 ? [DBArraySerializer deserialize:valueDict[@"invitation_signature"]
+                                                                        withBlock:^id(id elem0) {
+                                                                          return elem0;
+                                                                        }]
+                                                 : nil;
 
-  return [[DBSHARINGFileMemberActionResult alloc] initWithMember:member result:result];
+  return [[DBSHARINGFileMemberActionResult alloc] initWithMember:member
+                                                          result:result
+                                                       sckeySha1:sckeySha1
+                                             invitationSignature:invitationSignature];
 }
 
 @end
@@ -6476,7 +6548,7 @@
   NSMutableDictionary *jsonDict = [[NSMutableDictionary alloc] init];
 
   if ([valueObj isSuccess]) {
-    jsonDict = [[DBSHARINGMemberAccessLevelResultSerializer serialize:valueObj.success] mutableCopy];
+    [jsonDict addEntriesFromDictionary:[DBSHARINGMemberAccessLevelResultSerializer serialize:valueObj.success]];
     jsonDict[@".tag"] = @"success";
   } else if ([valueObj isMemberError]) {
     jsonDict[@"member_error"] = [[DBSHARINGFileMemberActionErrorSerializer serialize:valueObj.memberError] mutableCopy];
@@ -8381,7 +8453,7 @@
   NSMutableDictionary *jsonDict = [[NSMutableDictionary alloc] init];
 
   if ([valueObj isMetadata]) {
-    jsonDict = [[DBSHARINGSharedFileMetadataSerializer serialize:valueObj.metadata] mutableCopy];
+    [jsonDict addEntriesFromDictionary:[DBSHARINGSharedFileMetadataSerializer serialize:valueObj.metadata]];
     jsonDict[@".tag"] = @"metadata";
   } else if ([valueObj isAccessError]) {
     jsonDict[@"access_error"] =
@@ -14679,7 +14751,7 @@
   NSMutableDictionary *jsonDict = [[NSMutableDictionary alloc] init];
 
   if ([valueObj isResult]) {
-    jsonDict = [[DBSHARINGListFileMembersCountResultSerializer serialize:valueObj.result] mutableCopy];
+    [jsonDict addEntriesFromDictionary:[DBSHARINGListFileMembersCountResultSerializer serialize:valueObj.result]];
     jsonDict[@".tag"] = @"result";
   } else if ([valueObj isAccessError]) {
     jsonDict[@"access_error"] =
@@ -18459,7 +18531,8 @@
   } else if ([valueObj isInsideSharedFolder]) {
     jsonDict[@".tag"] = @"inside_shared_folder";
   } else if ([valueObj isInsufficientQuota]) {
-    jsonDict = [[DBSHARINGInsufficientQuotaAmountsSerializer serialize:valueObj.insufficientQuota] mutableCopy];
+    [jsonDict
+        addEntriesFromDictionary:[DBSHARINGInsufficientQuotaAmountsSerializer serialize:valueObj.insufficientQuota]];
     jsonDict[@".tag"] = @"insufficient_quota";
   } else if ([valueObj isAlreadyMounted]) {
     jsonDict[@".tag"] = @"already_mounted";
@@ -19375,7 +19448,7 @@
   } else if ([valueObj isRestrictedByParentFolder]) {
     jsonDict[@".tag"] = @"restricted_by_parent_folder";
   } else if ([valueObj isInsufficientPlan]) {
-    jsonDict = [[DBSHARINGInsufficientPlanSerializer serialize:valueObj.insufficientPlan] mutableCopy];
+    [jsonDict addEntriesFromDictionary:[DBSHARINGInsufficientPlanSerializer serialize:valueObj.insufficientPlan]];
     jsonDict[@".tag"] = @"insufficient_plan";
   } else if ([valueObj isOther]) {
     jsonDict[@".tag"] = @"other";
@@ -20489,7 +20562,8 @@
         [[DBSHARINGSharingFileAccessErrorSerializer serialize:valueObj.accessError] mutableCopy];
     jsonDict[@".tag"] = @"access_error";
   } else if ([valueObj isNoExplicitAccess]) {
-    jsonDict = [[DBSHARINGMemberAccessLevelResultSerializer serialize:valueObj.noExplicitAccess] mutableCopy];
+    [jsonDict
+        addEntriesFromDictionary:[DBSHARINGMemberAccessLevelResultSerializer serialize:valueObj.noExplicitAccess]];
     jsonDict[@".tag"] = @"no_explicit_access";
   } else if ([valueObj isOther]) {
     jsonDict[@".tag"] = @"other";
@@ -21142,7 +21216,7 @@
   if ([valueObj isInProgress]) {
     jsonDict[@".tag"] = @"in_progress";
   } else if ([valueObj isComplete]) {
-    jsonDict = [[DBSHARINGMemberAccessLevelResultSerializer serialize:valueObj.complete] mutableCopy];
+    [jsonDict addEntriesFromDictionary:[DBSHARINGMemberAccessLevelResultSerializer serialize:valueObj.complete]];
     jsonDict[@".tag"] = @"complete";
   } else if ([valueObj isFailed]) {
     jsonDict[@"failed"] = [[DBSHARINGRemoveFolderMemberErrorSerializer serialize:valueObj.failed] mutableCopy];
@@ -21212,6 +21286,14 @@
   return self;
 }
 
+- (instancetype)initWithDefault_ {
+  self = [super init];
+  if (self) {
+    _tag = DBSHARINGRequestedLinkAccessLevelDefault_;
+  }
+  return self;
+}
+
 - (instancetype)initWithOther {
   self = [super init];
   if (self) {
@@ -21236,6 +21318,10 @@
   return _tag == DBSHARINGRequestedLinkAccessLevelMax;
 }
 
+- (BOOL)isDefault_ {
+  return _tag == DBSHARINGRequestedLinkAccessLevelDefault_;
+}
+
 - (BOOL)isOther {
   return _tag == DBSHARINGRequestedLinkAccessLevelOther;
 }
@@ -21248,6 +21334,8 @@
     return @"DBSHARINGRequestedLinkAccessLevelEditor";
   case DBSHARINGRequestedLinkAccessLevelMax:
     return @"DBSHARINGRequestedLinkAccessLevelMax";
+  case DBSHARINGRequestedLinkAccessLevelDefault_:
+    return @"DBSHARINGRequestedLinkAccessLevelDefault_";
   case DBSHARINGRequestedLinkAccessLevelOther:
     return @"DBSHARINGRequestedLinkAccessLevelOther";
   }
@@ -21295,6 +21383,9 @@
   case DBSHARINGRequestedLinkAccessLevelMax:
     result = prime * result + [[self tagName] hash];
     break;
+  case DBSHARINGRequestedLinkAccessLevelDefault_:
+    result = prime * result + [[self tagName] hash];
+    break;
   case DBSHARINGRequestedLinkAccessLevelOther:
     result = prime * result + [[self tagName] hash];
     break;
@@ -21329,6 +21420,8 @@
     return [[self tagName] isEqual:[aRequestedLinkAccessLevel tagName]];
   case DBSHARINGRequestedLinkAccessLevelMax:
     return [[self tagName] isEqual:[aRequestedLinkAccessLevel tagName]];
+  case DBSHARINGRequestedLinkAccessLevelDefault_:
+    return [[self tagName] isEqual:[aRequestedLinkAccessLevel tagName]];
   case DBSHARINGRequestedLinkAccessLevelOther:
     return [[self tagName] isEqual:[aRequestedLinkAccessLevel tagName]];
   }
@@ -21350,6 +21443,8 @@
     jsonDict[@".tag"] = @"editor";
   } else if ([valueObj isMax]) {
     jsonDict[@".tag"] = @"max";
+  } else if ([valueObj isDefault_]) {
+    jsonDict[@".tag"] = @"default";
   } else if ([valueObj isOther]) {
     jsonDict[@".tag"] = @"other";
   } else {
@@ -21368,6 +21463,8 @@
     return [[DBSHARINGRequestedLinkAccessLevel alloc] initWithEditor];
   } else if ([tag isEqualToString:@"max"]) {
     return [[DBSHARINGRequestedLinkAccessLevel alloc] initWithMax];
+  } else if ([tag isEqualToString:@"default"]) {
+    return [[DBSHARINGRequestedLinkAccessLevel alloc] initWithDefault_];
   } else if ([tag isEqualToString:@"other"]) {
     return [[DBSHARINGRequestedLinkAccessLevel alloc] initWithOther];
   } else {
@@ -23138,7 +23235,7 @@
   if ([valueObj isInProgress]) {
     jsonDict[@".tag"] = @"in_progress";
   } else if ([valueObj isComplete]) {
-    jsonDict = [[DBSHARINGSharedFolderMetadataSerializer serialize:valueObj.complete] mutableCopy];
+    [jsonDict addEntriesFromDictionary:[DBSHARINGSharedFolderMetadataSerializer serialize:valueObj.complete]];
     jsonDict[@".tag"] = @"complete";
   } else if ([valueObj isFailed]) {
     jsonDict[@"failed"] = [[DBSHARINGShareFolderErrorSerializer serialize:valueObj.failed] mutableCopy];
@@ -23328,7 +23425,7 @@
     jsonDict[@"async_job_id"] = valueObj.asyncJobId;
     jsonDict[@".tag"] = @"async_job_id";
   } else if ([valueObj isComplete]) {
-    jsonDict = [[DBSHARINGSharedFolderMetadataSerializer serialize:valueObj.complete] mutableCopy];
+    [jsonDict addEntriesFromDictionary:[DBSHARINGSharedFolderMetadataSerializer serialize:valueObj.complete]];
     jsonDict[@".tag"] = @"complete";
   } else {
     @throw([NSException exceptionWithName:@"InvalidTag"
@@ -23484,6 +23581,14 @@
   return self;
 }
 
+- (instancetype)initWithIsVaultLocked {
+  self = [super init];
+  if (self) {
+    _tag = DBSHARINGSharePathErrorIsVaultLocked;
+  }
+  return self;
+}
+
 - (instancetype)initWithIsFamily {
   self = [super init];
   if (self) {
@@ -23568,6 +23673,10 @@
   return _tag == DBSHARINGSharePathErrorIsVault;
 }
 
+- (BOOL)isIsVaultLocked {
+  return _tag == DBSHARINGSharePathErrorIsVaultLocked;
+}
+
 - (BOOL)isIsFamily {
   return _tag == DBSHARINGSharePathErrorIsFamily;
 }
@@ -23606,6 +23715,8 @@
     return @"DBSHARINGSharePathErrorInsideOsxPackage";
   case DBSHARINGSharePathErrorIsVault:
     return @"DBSHARINGSharePathErrorIsVault";
+  case DBSHARINGSharePathErrorIsVaultLocked:
+    return @"DBSHARINGSharePathErrorIsVaultLocked";
   case DBSHARINGSharePathErrorIsFamily:
     return @"DBSHARINGSharePathErrorIsFamily";
   case DBSHARINGSharePathErrorOther:
@@ -23688,6 +23799,9 @@
   case DBSHARINGSharePathErrorIsVault:
     result = prime * result + [[self tagName] hash];
     break;
+  case DBSHARINGSharePathErrorIsVaultLocked:
+    result = prime * result + [[self tagName] hash];
+    break;
   case DBSHARINGSharePathErrorIsFamily:
     result = prime * result + [[self tagName] hash];
     break;
@@ -23747,6 +23861,8 @@
     return [[self tagName] isEqual:[aSharePathError tagName]];
   case DBSHARINGSharePathErrorIsVault:
     return [[self tagName] isEqual:[aSharePathError tagName]];
+  case DBSHARINGSharePathErrorIsVaultLocked:
+    return [[self tagName] isEqual:[aSharePathError tagName]];
   case DBSHARINGSharePathErrorIsFamily:
     return [[self tagName] isEqual:[aSharePathError tagName]];
   case DBSHARINGSharePathErrorOther:
@@ -23783,7 +23899,7 @@
   } else if ([valueObj isInsidePublicFolder]) {
     jsonDict[@".tag"] = @"inside_public_folder";
   } else if ([valueObj isAlreadyShared]) {
-    jsonDict = [[DBSHARINGSharedFolderMetadataSerializer serialize:valueObj.alreadyShared] mutableCopy];
+    [jsonDict addEntriesFromDictionary:[DBSHARINGSharedFolderMetadataSerializer serialize:valueObj.alreadyShared]];
     jsonDict[@".tag"] = @"already_shared";
   } else if ([valueObj isInvalidPath]) {
     jsonDict[@".tag"] = @"invalid_path";
@@ -23793,6 +23909,8 @@
     jsonDict[@".tag"] = @"inside_osx_package";
   } else if ([valueObj isIsVault]) {
     jsonDict[@".tag"] = @"is_vault";
+  } else if ([valueObj isIsVaultLocked]) {
+    jsonDict[@".tag"] = @"is_vault_locked";
   } else if ([valueObj isIsFamily]) {
     jsonDict[@".tag"] = @"is_family";
   } else if ([valueObj isOther]) {
@@ -23836,6 +23954,8 @@
     return [[DBSHARINGSharePathError alloc] initWithInsideOsxPackage];
   } else if ([tag isEqualToString:@"is_vault"]) {
     return [[DBSHARINGSharePathError alloc] initWithIsVault];
+  } else if ([tag isEqualToString:@"is_vault_locked"]) {
+    return [[DBSHARINGSharePathError alloc] initWithIsVaultLocked];
   } else if ([tag isEqualToString:@"is_family"]) {
     return [[DBSHARINGSharePathError alloc] initWithIsFamily];
   } else if ([tag isEqualToString:@"other"]) {
@@ -25017,7 +25137,8 @@
   } else if ([valueObj isNotAMember]) {
     jsonDict[@".tag"] = @"not_a_member";
   } else if ([valueObj isNoExplicitAccess]) {
-    jsonDict = [[DBSHARINGMemberAccessLevelResultSerializer serialize:valueObj.noExplicitAccess] mutableCopy];
+    [jsonDict
+        addEntriesFromDictionary:[DBSHARINGMemberAccessLevelResultSerializer serialize:valueObj.noExplicitAccess]];
     jsonDict[@".tag"] = @"no_explicit_access";
   } else if ([valueObj isOther]) {
     jsonDict[@".tag"] = @"other";

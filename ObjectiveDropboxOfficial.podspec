@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = 'ObjectiveDropboxOfficial'
-  s.version      = '6.1.0'
+  s.version      = '7.1.0'
   s.summary      = 'Dropbox Objective C SDK for APIv2'
   s.homepage     = 'https://www.dropbox.com/developers'
   s.license      = 'MIT'
@@ -14,7 +14,7 @@ Pod::Spec.new do |s|
   s.requires_arc = true
   
   s.osx.deployment_target = '10.10'
-  s.ios.deployment_target = '9.0'
+  s.ios.deployment_target = '11.0'
  
   s.public_header_files = 'Source/ObjectiveDropboxOfficial/Shared/**/*.h', 'Source/ObjectiveDropboxOfficial/Headers/Umbrella/*.h'
   s.osx.public_header_files = 'Source/ObjectiveDropboxOfficial/Platform/ObjectiveDropboxOfficial_macOS/**/*.h'

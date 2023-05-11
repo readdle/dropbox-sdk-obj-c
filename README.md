@@ -57,7 +57,7 @@ NOTE: Please do not rely on `master` in production. Please instead use one of ou
 
 ## System requirements
 
-- iOS 9.0+
+- iOS 11.0+
 - macOS 10.10+
 - Xcode 8+ (11.0+ if you use Carthage)
 
@@ -168,7 +168,7 @@ brew install carthage
 
 ```
 # ObjectiveDropboxOfficial
-github "https://github.com/dropbox/dropbox-sdk-obj-c" ~> 6.1.0
+github "https://github.com/dropbox/dropbox-sdk-obj-c" ~> 7.1.0
 ```
 
 To integrate the Dropbox Objective-C SDK into your project, take the following steps:
@@ -323,11 +323,11 @@ Please ensure that the supplied view controller is the top-most controller, so t
   // Note: this is the DEPRECATED authorization flow that grants a long-lived token.
   // If you are still using this, please update your app to use the `authorizeFromControllerV2` call instead.
   // See https://dropbox.tech/developers/migrating-app-permissions-and-access-tokens
-  [DBClientsManager authorizeFromController:[UIApplication sharedApplication]
-                                 controller:[[self class] topMostController]
-                                    openURL:^(NSURL *url) {
-                                      [[UIApplication sharedApplication] openURL:url];
-                                    }];
+  // [DBClientsManager authorizeFromController:[UIApplication sharedApplication]
+  //                                controller:[[self class] topMostController]
+  //                                   openURL:^(NSURL *url) {
+  //                                     [[UIApplication sharedApplication] openURL:url];
+  //                                   }];
 }
 
 + (UIViewController*)topMostController
@@ -362,9 +362,9 @@ Please ensure that the supplied view controller is the top-most controller, so t
   // Note: this is the DEPRECATED authorization flow that grants a long-lived token.
   // If you are still using this, please update your app to use the `authorizeFromControllerDesktopV2` call instead.
   // See https://dropbox.tech/developers/migrating-app-permissions-and-access-tokens
-  [DBClientsManager authorizeFromControllerDesktop:[NSWorkspace sharedWorkspace]
-                                        controller:self
-                                           openURL:^(NSURL *url){ [[NSWorkspace sharedWorkspace] openURL:url]; }];
+  // [DBClientsManager authorizeFromControllerDesktop:[NSWorkspace sharedWorkspace]
+  //                                       controller:self
+  //                                          openURL:^(NSURL *url){ [[NSWorkspace sharedWorkspace] openURL:url]; }];
 
 }
 ```

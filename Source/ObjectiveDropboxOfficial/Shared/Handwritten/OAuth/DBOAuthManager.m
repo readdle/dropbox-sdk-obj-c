@@ -69,8 +69,10 @@
 
 - (instancetype)initWithCoder:(NSCoder *)coder {
   NSString *uid = [coder decodeObjectOfClass:NSString.class forKey:NSStringFromSelector(@selector(uid))];
-  NSString *accessToken = [coder decodeObjectOfClass:NSString.class forKey:NSStringFromSelector(@selector(accessToken))];
-  NSString *refreshToken = [coder decodeObjectOfClass:NSString.class forKey:NSStringFromSelector(@selector(refreshToken))];
+  NSString *accessToken =
+      [coder decodeObjectOfClass:NSString.class forKey:NSStringFromSelector(@selector(accessToken))];
+  NSString *refreshToken =
+      [coder decodeObjectOfClass:NSString.class forKey:NSStringFromSelector(@selector(refreshToken))];
   NSTimeInterval tokenExpirationTimestamp =
       [coder decodeDoubleForKey:NSStringFromSelector(@selector(tokenExpirationTimestamp))];
   if (accessToken == nil || uid == nil) {
@@ -137,7 +139,7 @@ static DBOAuthManager *s_sharedOAuthManager;
     _cancelURL = [NSURL URLWithString:[NSString stringWithFormat:@"db-%@://2/cancel", _appKey]];
     _host = host;
     _urls = [NSMutableArray arrayWithObjects:_redirectURL, nil];
-#ifdef TARGET_OS_OSX
+#if TARGET_OS_OSX
     _disableSignup = NO;
 #else
     _disableSignup = YES;

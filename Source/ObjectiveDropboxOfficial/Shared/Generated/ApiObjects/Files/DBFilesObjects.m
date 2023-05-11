@@ -20,7 +20,7 @@
   [DBStoneValidators
    nonnullValidator:[DBStoneValidators stringValidator:nil maxLength:nil pattern:@"/(.|[\\r\\n])*"]](path);
   [DBStoneValidators
-   nonnullValidator:[DBStoneValidators stringValidator:@(1) maxLength:@(32) pattern:@"[A-Za-z0-9_]+"]](tagText);
+   nonnullValidator:[DBStoneValidators stringValidator:@(1) maxLength:@(32) pattern:@"[\\w]+"]](tagText);
 
   self = [super init];
   if (self) {
@@ -2166,7 +2166,7 @@
   if ([valueObj isInProgress]) {
     jsonDict[@".tag"] = @"in_progress";
   } else if ([valueObj isComplete]) {
-    [jsonDict addEntriesFromDictionary:[DBFILESCreateFolderBatchResultSerializer serialize:valueObj.complete]];
+    jsonDict = [[DBFILESCreateFolderBatchResultSerializer serialize:valueObj.complete] mutableCopy];
     jsonDict[@".tag"] = @"complete";
   } else if ([valueObj isFailed]) {
     jsonDict[@"failed"] = [[DBFILESCreateFolderBatchErrorSerializer serialize:valueObj.failed] mutableCopy];
@@ -2374,7 +2374,7 @@
     jsonDict[@"async_job_id"] = valueObj.asyncJobId;
     jsonDict[@".tag"] = @"async_job_id";
   } else if ([valueObj isComplete]) {
-    [jsonDict addEntriesFromDictionary:[DBFILESCreateFolderBatchResultSerializer serialize:valueObj.complete]];
+    jsonDict = [[DBFILESCreateFolderBatchResultSerializer serialize:valueObj.complete] mutableCopy];
     jsonDict[@".tag"] = @"complete";
   } else if ([valueObj isOther]) {
     jsonDict[@".tag"] = @"other";
@@ -2759,7 +2759,7 @@
   NSMutableDictionary *jsonDict = [[NSMutableDictionary alloc] init];
 
   if ([valueObj isSuccess]) {
-    [jsonDict addEntriesFromDictionary:[DBFILESCreateFolderEntryResultSerializer serialize:valueObj.success]];
+    jsonDict = [[DBFILESCreateFolderEntryResultSerializer serialize:valueObj.success] mutableCopy];
     jsonDict[@".tag"] = @"success";
   } else if ([valueObj isFailure]) {
     jsonDict[@"failure"] = [[DBFILESCreateFolderEntryErrorSerializer serialize:valueObj.failure] mutableCopy];
@@ -3445,7 +3445,7 @@
 - (instancetype)initWithEntries:(NSArray<DBFILESDeleteArg *> *)entries {
   [DBStoneValidators
    nonnullValidator:[DBStoneValidators arrayValidator:nil
-                                             maxItems:nil
+                                             maxItems:@(1000)
                                         itemValidator:[DBStoneValidators nonnullValidator:nil]]](entries);
 
   self = [super init];
@@ -3886,7 +3886,7 @@
   if ([valueObj isInProgress]) {
     jsonDict[@".tag"] = @"in_progress";
   } else if ([valueObj isComplete]) {
-    [jsonDict addEntriesFromDictionary:[DBFILESDeleteBatchResultSerializer serialize:valueObj.complete]];
+    jsonDict = [[DBFILESDeleteBatchResultSerializer serialize:valueObj.complete] mutableCopy];
     jsonDict[@".tag"] = @"complete";
   } else if ([valueObj isFailed]) {
     jsonDict[@"failed"] = [[DBFILESDeleteBatchErrorSerializer serialize:valueObj.failed] mutableCopy];
@@ -4094,7 +4094,7 @@
     jsonDict[@"async_job_id"] = valueObj.asyncJobId;
     jsonDict[@".tag"] = @"async_job_id";
   } else if ([valueObj isComplete]) {
-    [jsonDict addEntriesFromDictionary:[DBFILESDeleteBatchResultSerializer serialize:valueObj.complete]];
+    jsonDict = [[DBFILESDeleteBatchResultSerializer serialize:valueObj.complete] mutableCopy];
     jsonDict[@".tag"] = @"complete";
   } else if ([valueObj isOther]) {
     jsonDict[@".tag"] = @"other";
@@ -4486,7 +4486,7 @@
   NSMutableDictionary *jsonDict = [[NSMutableDictionary alloc] init];
 
   if ([valueObj isSuccess]) {
-    [jsonDict addEntriesFromDictionary:[DBFILESDeleteBatchResultDataSerializer serialize:valueObj.success]];
+    jsonDict = [[DBFILESDeleteBatchResultDataSerializer serialize:valueObj.success] mutableCopy];
     jsonDict[@".tag"] = @"success";
   } else if ([valueObj isFailure]) {
     jsonDict[@"failure"] = [[DBFILESDeleteErrorSerializer serialize:valueObj.failure] mutableCopy];
@@ -7425,7 +7425,7 @@
   if ([valueObj isUnlocked]) {
     jsonDict[@".tag"] = @"unlocked";
   } else if ([valueObj isSingleUser]) {
-    [jsonDict addEntriesFromDictionary:[DBFILESSingleUserLockSerializer serialize:valueObj.singleUser]];
+    jsonDict = [[DBFILESSingleUserLockSerializer serialize:valueObj.singleUser] mutableCopy];
     jsonDict[@".tag"] = @"single_user";
   } else if ([valueObj isOther]) {
     jsonDict[@".tag"] = @"other";
@@ -10742,7 +10742,7 @@
   NSMutableDictionary *jsonDict = [[NSMutableDictionary alloc] init];
 
   if ([valueObj isSuccess]) {
-    [jsonDict addEntriesFromDictionary:[DBFILESGetThumbnailBatchResultDataSerializer serialize:valueObj.success]];
+    jsonDict = [[DBFILESGetThumbnailBatchResultDataSerializer serialize:valueObj.success] mutableCopy];
     jsonDict[@".tag"] = @"success";
   } else if ([valueObj isFailure]) {
     jsonDict[@"failure"] = [[DBFILESThumbnailErrorSerializer serialize:valueObj.failure] mutableCopy];
@@ -13836,7 +13836,7 @@
   } else if ([valueObj isFileNotShared]) {
     jsonDict[@".tag"] = @"file_not_shared";
   } else if ([valueObj isLockConflict]) {
-    [jsonDict addEntriesFromDictionary:[DBFILESLockConflictErrorSerializer serialize:valueObj.lockConflict]];
+    jsonDict = [[DBFILESLockConflictErrorSerializer serialize:valueObj.lockConflict] mutableCopy];
     jsonDict[@".tag"] = @"lock_conflict";
   } else if ([valueObj isInternalError]) {
     jsonDict[@".tag"] = @"internal_error";
@@ -14140,7 +14140,7 @@
   NSMutableDictionary *jsonDict = [[NSMutableDictionary alloc] init];
 
   if ([valueObj isSuccess]) {
-    [jsonDict addEntriesFromDictionary:[DBFILESLockFileResultSerializer serialize:valueObj.success]];
+    jsonDict = [[DBFILESLockFileResultSerializer serialize:valueObj.success] mutableCopy];
     jsonDict[@".tag"] = @"success";
   } else if ([valueObj isFailure]) {
     jsonDict[@"failure"] = [[DBFILESLockFileErrorSerializer serialize:valueObj.failure] mutableCopy];
@@ -15134,7 +15134,7 @@
 - (instancetype)initWithEntries:(NSArray<DBFILESRelocationPath *> *)entries autorename:(NSNumber *)autorename {
   [DBStoneValidators
    nonnullValidator:[DBStoneValidators arrayValidator:@(1)
-                                             maxItems:nil
+                                             maxItems:@(1000)
                                         itemValidator:[DBStoneValidators nonnullValidator:nil]]](entries);
 
   self = [super init];
@@ -15258,7 +15258,7 @@
          allowOwnershipTransfer:(NSNumber *)allowOwnershipTransfer {
   [DBStoneValidators
    nonnullValidator:[DBStoneValidators arrayValidator:@(1)
-                                             maxItems:nil
+                                             maxItems:@(1000)
                                         itemValidator:[DBStoneValidators nonnullValidator:nil]]](entries);
 
   self = [super initWithEntries:entries autorename:autorename];
@@ -17422,7 +17422,7 @@
     jsonDict[@"path"] = valueObj.path;
     jsonDict[@".tag"] = @"path";
   } else if ([valueObj isLink]) {
-    [jsonDict addEntriesFromDictionary:[DBFILESSharedLinkFileInfoSerializer serialize:valueObj.link]];
+    jsonDict = [[DBFILESSharedLinkFileInfoSerializer serialize:valueObj.link] mutableCopy];
     jsonDict[@".tag"] = @"link";
   } else if ([valueObj isOther]) {
     jsonDict[@".tag"] = @"other";
@@ -18452,7 +18452,7 @@
          allowOwnershipTransfer:(NSNumber *)allowOwnershipTransfer {
   [DBStoneValidators
    nonnullValidator:[DBStoneValidators arrayValidator:@(1)
-                                             maxItems:nil
+                                             maxItems:@(1000)
                                         itemValidator:[DBStoneValidators nonnullValidator:nil]]](entries);
 
   self = [super initWithEntries:entries autorename:autorename];
@@ -20031,7 +20031,7 @@
   if ([valueObj isInProgress]) {
     jsonDict[@".tag"] = @"in_progress";
   } else if ([valueObj isComplete]) {
-    [jsonDict addEntriesFromDictionary:[DBFILESRelocationBatchResultSerializer serialize:valueObj.complete]];
+    jsonDict = [[DBFILESRelocationBatchResultSerializer serialize:valueObj.complete] mutableCopy];
     jsonDict[@".tag"] = @"complete";
   } else if ([valueObj isFailed]) {
     jsonDict[@"failed"] = [[DBFILESRelocationBatchErrorSerializer serialize:valueObj.failed] mutableCopy];
@@ -20240,7 +20240,7 @@
     jsonDict[@"async_job_id"] = valueObj.asyncJobId;
     jsonDict[@".tag"] = @"async_job_id";
   } else if ([valueObj isComplete]) {
-    [jsonDict addEntriesFromDictionary:[DBFILESRelocationBatchResultSerializer serialize:valueObj.complete]];
+    jsonDict = [[DBFILESRelocationBatchResultSerializer serialize:valueObj.complete] mutableCopy];
     jsonDict[@".tag"] = @"complete";
   } else if ([valueObj isOther]) {
     jsonDict[@".tag"] = @"other";
@@ -20828,7 +20828,7 @@
   if ([valueObj isInProgress]) {
     jsonDict[@".tag"] = @"in_progress";
   } else if ([valueObj isComplete]) {
-    [jsonDict addEntriesFromDictionary:[DBFILESRelocationBatchV2ResultSerializer serialize:valueObj.complete]];
+    jsonDict = [[DBFILESRelocationBatchV2ResultSerializer serialize:valueObj.complete] mutableCopy];
     jsonDict[@".tag"] = @"complete";
   } else {
     @throw([NSException exceptionWithName:@"InvalidTag"
@@ -21012,7 +21012,7 @@
     jsonDict[@"async_job_id"] = valueObj.asyncJobId;
     jsonDict[@".tag"] = @"async_job_id";
   } else if ([valueObj isComplete]) {
-    [jsonDict addEntriesFromDictionary:[DBFILESRelocationBatchV2ResultSerializer serialize:valueObj.complete]];
+    jsonDict = [[DBFILESRelocationBatchV2ResultSerializer serialize:valueObj.complete] mutableCopy];
     jsonDict[@".tag"] = @"complete";
   } else {
     @throw([NSException exceptionWithName:@"InvalidTag"
@@ -21268,7 +21268,7 @@
   [DBStoneValidators
    nonnullValidator:[DBStoneValidators stringValidator:nil maxLength:nil pattern:@"/(.|[\\r\\n])*"]](path);
   [DBStoneValidators
-   nonnullValidator:[DBStoneValidators stringValidator:@(1) maxLength:@(32) pattern:@"[A-Za-z0-9_]+"]](tagText);
+   nonnullValidator:[DBStoneValidators stringValidator:@(1) maxLength:@(32) pattern:@"[\\w]+"]](tagText);
 
   self = [super init];
   if (self) {
@@ -22897,7 +22897,7 @@
   if ([valueObj isInProgress]) {
     jsonDict[@".tag"] = @"in_progress";
   } else if ([valueObj isComplete]) {
-    [jsonDict addEntriesFromDictionary:[DBFILESFileMetadataSerializer serialize:valueObj.complete]];
+    jsonDict = [[DBFILESFileMetadataSerializer serialize:valueObj.complete] mutableCopy];
     jsonDict[@".tag"] = @"complete";
   } else if ([valueObj isFailed]) {
     jsonDict[@"failed"] = [[DBFILESSaveUrlErrorSerializer serialize:valueObj.failed] mutableCopy];
@@ -23087,7 +23087,7 @@
     jsonDict[@"async_job_id"] = valueObj.asyncJobId;
     jsonDict[@".tag"] = @"async_job_id";
   } else if ([valueObj isComplete]) {
-    [jsonDict addEntriesFromDictionary:[DBFILESFileMetadataSerializer serialize:valueObj.complete]];
+    jsonDict = [[DBFILESFileMetadataSerializer serialize:valueObj.complete] mutableCopy];
     jsonDict[@".tag"] = @"complete";
   } else {
     @throw([NSException exceptionWithName:@"InvalidTag"
@@ -26564,7 +26564,7 @@
   NSMutableDictionary *jsonDict = [[NSMutableDictionary alloc] init];
 
   if ([valueObj isUserGeneratedTag]) {
-    [jsonDict addEntriesFromDictionary:[DBFILESUserGeneratedTagSerializer serialize:valueObj.userGeneratedTag]];
+    jsonDict = [[DBFILESUserGeneratedTagSerializer serialize:valueObj.userGeneratedTag] mutableCopy];
     jsonDict[@".tag"] = @"user_generated_tag";
   } else if ([valueObj isOther]) {
     jsonDict[@".tag"] = @"other";
@@ -28658,7 +28658,7 @@
   NSMutableDictionary *jsonDict = [[NSMutableDictionary alloc] init];
 
   if ([valueObj isPath]) {
-    [jsonDict addEntriesFromDictionary:[DBFILESUploadWriteFailedSerializer serialize:valueObj.path]];
+    jsonDict = [[DBFILESUploadWriteFailedSerializer serialize:valueObj.path] mutableCopy];
     jsonDict[@".tag"] = @"path";
   } else if ([valueObj isPropertiesError]) {
     jsonDict[@"properties_error"] =
@@ -29105,7 +29105,7 @@
   if ([valueObj isNotFound]) {
     jsonDict[@".tag"] = @"not_found";
   } else if ([valueObj isIncorrectOffset]) {
-    [jsonDict addEntriesFromDictionary:[DBFILESUploadSessionOffsetErrorSerializer serialize:valueObj.incorrectOffset]];
+    jsonDict = [[DBFILESUploadSessionOffsetErrorSerializer serialize:valueObj.incorrectOffset] mutableCopy];
     jsonDict[@".tag"] = @"incorrect_offset";
   } else if ([valueObj isClosed]) {
     jsonDict[@".tag"] = @"closed";
@@ -29455,7 +29455,7 @@
   if ([valueObj isNotFound]) {
     jsonDict[@".tag"] = @"not_found";
   } else if ([valueObj isIncorrectOffset]) {
-    [jsonDict addEntriesFromDictionary:[DBFILESUploadSessionOffsetErrorSerializer serialize:valueObj.incorrectOffset]];
+    jsonDict = [[DBFILESUploadSessionOffsetErrorSerializer serialize:valueObj.incorrectOffset] mutableCopy];
     jsonDict[@".tag"] = @"incorrect_offset";
   } else if ([valueObj isClosed]) {
     jsonDict[@".tag"] = @"closed";
@@ -30005,7 +30005,7 @@
   if ([valueObj isInProgress]) {
     jsonDict[@".tag"] = @"in_progress";
   } else if ([valueObj isComplete]) {
-    [jsonDict addEntriesFromDictionary:[DBFILESUploadSessionFinishBatchResultSerializer serialize:valueObj.complete]];
+    jsonDict = [[DBFILESUploadSessionFinishBatchResultSerializer serialize:valueObj.complete] mutableCopy];
     jsonDict[@".tag"] = @"complete";
   } else {
     @throw([NSException exceptionWithName:@"InvalidTag"
@@ -30212,7 +30212,7 @@
     jsonDict[@"async_job_id"] = valueObj.asyncJobId;
     jsonDict[@".tag"] = @"async_job_id";
   } else if ([valueObj isComplete]) {
-    [jsonDict addEntriesFromDictionary:[DBFILESUploadSessionFinishBatchResultSerializer serialize:valueObj.complete]];
+    jsonDict = [[DBFILESUploadSessionFinishBatchResultSerializer serialize:valueObj.complete] mutableCopy];
     jsonDict[@".tag"] = @"complete";
   } else if ([valueObj isOther]) {
     jsonDict[@".tag"] = @"other";
@@ -30509,7 +30509,7 @@
   NSMutableDictionary *jsonDict = [[NSMutableDictionary alloc] init];
 
   if ([valueObj isSuccess]) {
-    [jsonDict addEntriesFromDictionary:[DBFILESFileMetadataSerializer serialize:valueObj.success]];
+    jsonDict = [[DBFILESFileMetadataSerializer serialize:valueObj.success] mutableCopy];
     jsonDict[@".tag"] = @"success";
   } else if ([valueObj isFailure]) {
     jsonDict[@"failure"] = [[DBFILESUploadSessionFinishErrorSerializer serialize:valueObj.failure] mutableCopy];
@@ -32025,7 +32025,7 @@
 
 - (instancetype)initWithTagText:(NSString *)tagText {
   [DBStoneValidators
-   nonnullValidator:[DBStoneValidators stringValidator:@(1) maxLength:@(32) pattern:@"[A-Za-z0-9_]+"]](tagText);
+   nonnullValidator:[DBStoneValidators stringValidator:@(1) maxLength:@(32) pattern:@"[\\w]+"]](tagText);
 
   self = [super init];
   if (self) {

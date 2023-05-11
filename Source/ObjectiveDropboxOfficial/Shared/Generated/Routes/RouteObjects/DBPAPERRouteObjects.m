@@ -57,121 +57,66 @@ static DBRoute *DBPAPERDocsUsersListContinue;
 static DBRoute *DBPAPERDocsUsersRemove;
 static DBRoute *DBPAPERFoldersCreate;
 
-static NSObject *lockObj = nil;
-+ (void)initialize {
-  static dispatch_once_t onceToken;
-  dispatch_once(&onceToken, ^{
-    lockObj = [[NSObject alloc] init];
-  });
-}
-
 + (DBRoute *)DBPAPERDocsArchive {
-  @synchronized(lockObj) {
-    if (!DBPAPERDocsArchive) {
-      DBPAPERDocsArchive = [[DBRoute alloc] init:@"docs/archive"
-                                      namespace_:@"paper"
-                                      deprecated:@YES
-                                      resultType:nil
-                                       errorType:[DBPAPERDocLookupError class]
-                                           attrs:@{
-                                             @"auth" : @"user",
-                                             @"host" : @"api",
-                                             @"style" : @"rpc"
-                                           }
-                           dataStructSerialBlock:nil
-                         dataStructDeserialBlock:nil];
-    }
-    return DBPAPERDocsArchive;
+  if (!DBPAPERDocsArchive) {
+    DBPAPERDocsArchive = [[DBRoute alloc] init:@"docs/archive"
+                                    namespace_:@"paper"
+                                    deprecated:@YES
+                                    resultType:nil
+                                     errorType:[DBPAPERDocLookupError class]
+                                         attrs:@{
+                                           @"auth" : @"user",
+                                           @"host" : @"api",
+                                           @"style" : @"rpc"
+                                         }
+                         dataStructSerialBlock:nil
+                       dataStructDeserialBlock:nil];
   }
+  return DBPAPERDocsArchive;
 }
 
 + (DBRoute *)DBPAPERDocsCreate {
-  @synchronized(lockObj) {
-    if (!DBPAPERDocsCreate) {
-      DBPAPERDocsCreate = [[DBRoute alloc] init:@"docs/create"
-                                     namespace_:@"paper"
-                                     deprecated:@YES
-                                     resultType:[DBPAPERPaperDocCreateUpdateResult class]
-                                      errorType:[DBPAPERPaperDocCreateError class]
-                                          attrs:@{
-                                            @"auth" : @"user",
-                                            @"host" : @"api",
-                                            @"style" : @"upload"
-                                          }
-                          dataStructSerialBlock:nil
-                        dataStructDeserialBlock:nil];
-    }
-    return DBPAPERDocsCreate;
+  if (!DBPAPERDocsCreate) {
+    DBPAPERDocsCreate = [[DBRoute alloc] init:@"docs/create"
+                                   namespace_:@"paper"
+                                   deprecated:@YES
+                                   resultType:[DBPAPERPaperDocCreateUpdateResult class]
+                                    errorType:[DBPAPERPaperDocCreateError class]
+                                        attrs:@{
+                                          @"auth" : @"user",
+                                          @"host" : @"api",
+                                          @"style" : @"upload"
+                                        }
+                        dataStructSerialBlock:nil
+                      dataStructDeserialBlock:nil];
   }
+  return DBPAPERDocsCreate;
 }
 
 + (DBRoute *)DBPAPERDocsDownload {
-  @synchronized(lockObj) {
-    if (!DBPAPERDocsDownload) {
-      DBPAPERDocsDownload = [[DBRoute alloc] init:@"docs/download"
-                                       namespace_:@"paper"
-                                       deprecated:@YES
-                                       resultType:[DBPAPERPaperDocExportResult class]
-                                        errorType:[DBPAPERDocLookupError class]
-                                            attrs:@{
-                                              @"auth" : @"user",
-                                              @"host" : @"api",
-                                              @"style" : @"download"
-                                            }
-                            dataStructSerialBlock:nil
-                          dataStructDeserialBlock:nil];
-    }
-    return DBPAPERDocsDownload;
+  if (!DBPAPERDocsDownload) {
+    DBPAPERDocsDownload = [[DBRoute alloc] init:@"docs/download"
+                                     namespace_:@"paper"
+                                     deprecated:@YES
+                                     resultType:[DBPAPERPaperDocExportResult class]
+                                      errorType:[DBPAPERDocLookupError class]
+                                          attrs:@{
+                                            @"auth" : @"user",
+                                            @"host" : @"api",
+                                            @"style" : @"download"
+                                          }
+                          dataStructSerialBlock:nil
+                        dataStructDeserialBlock:nil];
   }
+  return DBPAPERDocsDownload;
 }
 
 + (DBRoute *)DBPAPERDocsFolderUsersList {
-  @synchronized(lockObj) {
-    if (!DBPAPERDocsFolderUsersList) {
-      DBPAPERDocsFolderUsersList = [[DBRoute alloc] init:@"docs/folder_users/list"
-                                              namespace_:@"paper"
-                                              deprecated:@YES
-                                              resultType:[DBPAPERListUsersOnFolderResponse class]
-                                               errorType:[DBPAPERDocLookupError class]
-                                                   attrs:@{
-                                                     @"auth" : @"user",
-                                                     @"host" : @"api",
-                                                     @"style" : @"rpc"
-                                                   }
-                                   dataStructSerialBlock:nil
-                                 dataStructDeserialBlock:nil];
-    }
-    return DBPAPERDocsFolderUsersList;
-  }
-}
-
-+ (DBRoute *)DBPAPERDocsFolderUsersListContinue {
-  @synchronized(lockObj) {
-    if (!DBPAPERDocsFolderUsersListContinue) {
-      DBPAPERDocsFolderUsersListContinue = [[DBRoute alloc] init:@"docs/folder_users/list/continue"
-                                                      namespace_:@"paper"
-                                                      deprecated:@YES
-                                                      resultType:[DBPAPERListUsersOnFolderResponse class]
-                                                       errorType:[DBPAPERListUsersCursorError class]
-                                                           attrs:@{
-                                                             @"auth" : @"user",
-                                                             @"host" : @"api",
-                                                             @"style" : @"rpc"
-                                                           }
-                                           dataStructSerialBlock:nil
-                                         dataStructDeserialBlock:nil];
-    }
-    return DBPAPERDocsFolderUsersListContinue;
-  }
-}
-
-+ (DBRoute *)DBPAPERDocsGetFolderInfo {
-  @synchronized(lockObj) {
-    if (!DBPAPERDocsGetFolderInfo) {
-      DBPAPERDocsGetFolderInfo = [[DBRoute alloc] init:@"docs/get_folder_info"
+  if (!DBPAPERDocsFolderUsersList) {
+    DBPAPERDocsFolderUsersList = [[DBRoute alloc] init:@"docs/folder_users/list"
                                             namespace_:@"paper"
                                             deprecated:@YES
-                                            resultType:[DBPAPERFoldersContainingPaperDoc class]
+                                            resultType:[DBPAPERListUsersOnFolderResponse class]
                                              errorType:[DBPAPERDocLookupError class]
                                                  attrs:@{
                                                    @"auth" : @"user",
@@ -180,203 +125,34 @@ static NSObject *lockObj = nil;
                                                  }
                                  dataStructSerialBlock:nil
                                dataStructDeserialBlock:nil];
-    }
-    return DBPAPERDocsGetFolderInfo;
   }
+  return DBPAPERDocsFolderUsersList;
 }
 
-+ (DBRoute *)DBPAPERDocsList {
-  @synchronized(lockObj) {
-    if (!DBPAPERDocsList) {
-      DBPAPERDocsList = [[DBRoute alloc] init:@"docs/list"
-                                   namespace_:@"paper"
-                                   deprecated:@YES
-                                   resultType:[DBPAPERListPaperDocsResponse class]
-                                    errorType:nil
-                                        attrs:@{
-                                          @"auth" : @"user",
-                                          @"host" : @"api",
-                                          @"style" : @"rpc"
-                                        }
-                        dataStructSerialBlock:nil
-                      dataStructDeserialBlock:nil];
-    }
-    return DBPAPERDocsList;
++ (DBRoute *)DBPAPERDocsFolderUsersListContinue {
+  if (!DBPAPERDocsFolderUsersListContinue) {
+    DBPAPERDocsFolderUsersListContinue = [[DBRoute alloc] init:@"docs/folder_users/list/continue"
+                                                    namespace_:@"paper"
+                                                    deprecated:@YES
+                                                    resultType:[DBPAPERListUsersOnFolderResponse class]
+                                                     errorType:[DBPAPERListUsersCursorError class]
+                                                         attrs:@{
+                                                           @"auth" : @"user",
+                                                           @"host" : @"api",
+                                                           @"style" : @"rpc"
+                                                         }
+                                         dataStructSerialBlock:nil
+                                       dataStructDeserialBlock:nil];
   }
+  return DBPAPERDocsFolderUsersListContinue;
 }
 
-+ (DBRoute *)DBPAPERDocsListContinue {
-  @synchronized(lockObj) {
-    if (!DBPAPERDocsListContinue) {
-      DBPAPERDocsListContinue = [[DBRoute alloc] init:@"docs/list/continue"
-                                           namespace_:@"paper"
-                                           deprecated:@YES
-                                           resultType:[DBPAPERListPaperDocsResponse class]
-                                            errorType:[DBPAPERListDocsCursorError class]
-                                                attrs:@{
-                                                  @"auth" : @"user",
-                                                  @"host" : @"api",
-                                                  @"style" : @"rpc"
-                                                }
-                                dataStructSerialBlock:nil
-                              dataStructDeserialBlock:nil];
-    }
-    return DBPAPERDocsListContinue;
-  }
-}
-
-+ (DBRoute *)DBPAPERDocsPermanentlyDelete {
-  @synchronized(lockObj) {
-    if (!DBPAPERDocsPermanentlyDelete) {
-      DBPAPERDocsPermanentlyDelete = [[DBRoute alloc] init:@"docs/permanently_delete"
-                                                namespace_:@"paper"
-                                                deprecated:@YES
-                                                resultType:nil
-                                                 errorType:[DBPAPERDocLookupError class]
-                                                     attrs:@{
-                                                       @"auth" : @"user",
-                                                       @"host" : @"api",
-                                                       @"style" : @"rpc"
-                                                     }
-                                     dataStructSerialBlock:nil
-                                   dataStructDeserialBlock:nil];
-    }
-    return DBPAPERDocsPermanentlyDelete;
-  }
-}
-
-+ (DBRoute *)DBPAPERDocsSharingPolicyGet {
-  @synchronized(lockObj) {
-    if (!DBPAPERDocsSharingPolicyGet) {
-      DBPAPERDocsSharingPolicyGet = [[DBRoute alloc] init:@"docs/sharing_policy/get"
-                                               namespace_:@"paper"
-                                               deprecated:@YES
-                                               resultType:[DBPAPERSharingPolicy class]
-                                                errorType:[DBPAPERDocLookupError class]
-                                                    attrs:@{
-                                                      @"auth" : @"user",
-                                                      @"host" : @"api",
-                                                      @"style" : @"rpc"
-                                                    }
-                                    dataStructSerialBlock:nil
-                                  dataStructDeserialBlock:nil];
-    }
-    return DBPAPERDocsSharingPolicyGet;
-  }
-}
-
-+ (DBRoute *)DBPAPERDocsSharingPolicySet {
-  @synchronized(lockObj) {
-    if (!DBPAPERDocsSharingPolicySet) {
-      DBPAPERDocsSharingPolicySet = [[DBRoute alloc] init:@"docs/sharing_policy/set"
-                                               namespace_:@"paper"
-                                               deprecated:@YES
-                                               resultType:nil
-                                                errorType:[DBPAPERDocLookupError class]
-                                                    attrs:@{
-                                                      @"auth" : @"user",
-                                                      @"host" : @"api",
-                                                      @"style" : @"rpc"
-                                                    }
-                                    dataStructSerialBlock:nil
-                                  dataStructDeserialBlock:nil];
-    }
-    return DBPAPERDocsSharingPolicySet;
-  }
-}
-
-+ (DBRoute *)DBPAPERDocsUpdate {
-  @synchronized(lockObj) {
-    if (!DBPAPERDocsUpdate) {
-      DBPAPERDocsUpdate = [[DBRoute alloc] init:@"docs/update"
-                                     namespace_:@"paper"
-                                     deprecated:@YES
-                                     resultType:[DBPAPERPaperDocCreateUpdateResult class]
-                                      errorType:[DBPAPERPaperDocUpdateError class]
-                                          attrs:@{
-                                            @"auth" : @"user",
-                                            @"host" : @"api",
-                                            @"style" : @"upload"
-                                          }
-                          dataStructSerialBlock:nil
-                        dataStructDeserialBlock:nil];
-    }
-    return DBPAPERDocsUpdate;
-  }
-}
-
-+ (DBRoute *)DBPAPERDocsUsersAdd {
-  @synchronized(lockObj) {
-    if (!DBPAPERDocsUsersAdd) {
-      DBPAPERDocsUsersAdd = [[DBRoute alloc] init:@"docs/users/add"
-          namespace_:@"paper"
-          deprecated:@YES
-          resultType:[NSArray<DBPAPERAddPaperDocUserMemberResult *> class]
-          errorType:[DBPAPERDocLookupError class]
-          attrs:@{
-            @"auth" : @"user",
-            @"host" : @"api",
-            @"style" : @"rpc"
-          }
-          dataStructSerialBlock:nil
-          dataStructDeserialBlock:^id(id dataStruct) {
-            return [DBArraySerializer deserialize:dataStruct
-                                        withBlock:^id(id elem0) {
-                                          return [DBPAPERAddPaperDocUserMemberResultSerializer deserialize:elem0];
-                                        }];
-          }];
-    }
-    return DBPAPERDocsUsersAdd;
-  }
-}
-
-+ (DBRoute *)DBPAPERDocsUsersList {
-  @synchronized(lockObj) {
-    if (!DBPAPERDocsUsersList) {
-      DBPAPERDocsUsersList = [[DBRoute alloc] init:@"docs/users/list"
-                                        namespace_:@"paper"
-                                        deprecated:@YES
-                                        resultType:[DBPAPERListUsersOnPaperDocResponse class]
-                                         errorType:[DBPAPERDocLookupError class]
-                                             attrs:@{
-                                               @"auth" : @"user",
-                                               @"host" : @"api",
-                                               @"style" : @"rpc"
-                                             }
-                             dataStructSerialBlock:nil
-                           dataStructDeserialBlock:nil];
-    }
-    return DBPAPERDocsUsersList;
-  }
-}
-
-+ (DBRoute *)DBPAPERDocsUsersListContinue {
-  @synchronized(lockObj) {
-    if (!DBPAPERDocsUsersListContinue) {
-      DBPAPERDocsUsersListContinue = [[DBRoute alloc] init:@"docs/users/list/continue"
-                                                namespace_:@"paper"
-                                                deprecated:@YES
-                                                resultType:[DBPAPERListUsersOnPaperDocResponse class]
-                                                 errorType:[DBPAPERListUsersCursorError class]
-                                                     attrs:@{
-                                                       @"auth" : @"user",
-                                                       @"host" : @"api",
-                                                       @"style" : @"rpc"
-                                                     }
-                                     dataStructSerialBlock:nil
-                                   dataStructDeserialBlock:nil];
-    }
-    return DBPAPERDocsUsersListContinue;
-  }
-}
-
-+ (DBRoute *)DBPAPERDocsUsersRemove {
-  @synchronized(lockObj) {
-    if (!DBPAPERDocsUsersRemove) {
-      DBPAPERDocsUsersRemove = [[DBRoute alloc] init:@"docs/users/remove"
++ (DBRoute *)DBPAPERDocsGetFolderInfo {
+  if (!DBPAPERDocsGetFolderInfo) {
+    DBPAPERDocsGetFolderInfo = [[DBRoute alloc] init:@"docs/get_folder_info"
                                           namespace_:@"paper"
                                           deprecated:@YES
-                                          resultType:nil
+                                          resultType:[DBPAPERFoldersContainingPaperDoc class]
                                            errorType:[DBPAPERDocLookupError class]
                                                attrs:@{
                                                  @"auth" : @"user",
@@ -385,19 +161,184 @@ static NSObject *lockObj = nil;
                                                }
                                dataStructSerialBlock:nil
                              dataStructDeserialBlock:nil];
-    }
-    return DBPAPERDocsUsersRemove;
   }
+  return DBPAPERDocsGetFolderInfo;
 }
 
-+ (DBRoute *)DBPAPERFoldersCreate {
-  @synchronized(lockObj) {
-    if (!DBPAPERFoldersCreate) {
-      DBPAPERFoldersCreate = [[DBRoute alloc] init:@"folders/create"
++ (DBRoute *)DBPAPERDocsList {
+  if (!DBPAPERDocsList) {
+    DBPAPERDocsList = [[DBRoute alloc] init:@"docs/list"
+                                 namespace_:@"paper"
+                                 deprecated:@YES
+                                 resultType:[DBPAPERListPaperDocsResponse class]
+                                  errorType:nil
+                                      attrs:@{
+                                        @"auth" : @"user",
+                                        @"host" : @"api",
+                                        @"style" : @"rpc"
+                                      }
+                      dataStructSerialBlock:nil
+                    dataStructDeserialBlock:nil];
+  }
+  return DBPAPERDocsList;
+}
+
++ (DBRoute *)DBPAPERDocsListContinue {
+  if (!DBPAPERDocsListContinue) {
+    DBPAPERDocsListContinue = [[DBRoute alloc] init:@"docs/list/continue"
+                                         namespace_:@"paper"
+                                         deprecated:@YES
+                                         resultType:[DBPAPERListPaperDocsResponse class]
+                                          errorType:[DBPAPERListDocsCursorError class]
+                                              attrs:@{
+                                                @"auth" : @"user",
+                                                @"host" : @"api",
+                                                @"style" : @"rpc"
+                                              }
+                              dataStructSerialBlock:nil
+                            dataStructDeserialBlock:nil];
+  }
+  return DBPAPERDocsListContinue;
+}
+
++ (DBRoute *)DBPAPERDocsPermanentlyDelete {
+  if (!DBPAPERDocsPermanentlyDelete) {
+    DBPAPERDocsPermanentlyDelete = [[DBRoute alloc] init:@"docs/permanently_delete"
+                                              namespace_:@"paper"
+                                              deprecated:@YES
+                                              resultType:nil
+                                               errorType:[DBPAPERDocLookupError class]
+                                                   attrs:@{
+                                                     @"auth" : @"user",
+                                                     @"host" : @"api",
+                                                     @"style" : @"rpc"
+                                                   }
+                                   dataStructSerialBlock:nil
+                                 dataStructDeserialBlock:nil];
+  }
+  return DBPAPERDocsPermanentlyDelete;
+}
+
++ (DBRoute *)DBPAPERDocsSharingPolicyGet {
+  if (!DBPAPERDocsSharingPolicyGet) {
+    DBPAPERDocsSharingPolicyGet = [[DBRoute alloc] init:@"docs/sharing_policy/get"
+                                             namespace_:@"paper"
+                                             deprecated:@YES
+                                             resultType:[DBPAPERSharingPolicy class]
+                                              errorType:[DBPAPERDocLookupError class]
+                                                  attrs:@{
+                                                    @"auth" : @"user",
+                                                    @"host" : @"api",
+                                                    @"style" : @"rpc"
+                                                  }
+                                  dataStructSerialBlock:nil
+                                dataStructDeserialBlock:nil];
+  }
+  return DBPAPERDocsSharingPolicyGet;
+}
+
++ (DBRoute *)DBPAPERDocsSharingPolicySet {
+  if (!DBPAPERDocsSharingPolicySet) {
+    DBPAPERDocsSharingPolicySet = [[DBRoute alloc] init:@"docs/sharing_policy/set"
+                                             namespace_:@"paper"
+                                             deprecated:@YES
+                                             resultType:nil
+                                              errorType:[DBPAPERDocLookupError class]
+                                                  attrs:@{
+                                                    @"auth" : @"user",
+                                                    @"host" : @"api",
+                                                    @"style" : @"rpc"
+                                                  }
+                                  dataStructSerialBlock:nil
+                                dataStructDeserialBlock:nil];
+  }
+  return DBPAPERDocsSharingPolicySet;
+}
+
++ (DBRoute *)DBPAPERDocsUpdate {
+  if (!DBPAPERDocsUpdate) {
+    DBPAPERDocsUpdate = [[DBRoute alloc] init:@"docs/update"
+                                   namespace_:@"paper"
+                                   deprecated:@YES
+                                   resultType:[DBPAPERPaperDocCreateUpdateResult class]
+                                    errorType:[DBPAPERPaperDocUpdateError class]
+                                        attrs:@{
+                                          @"auth" : @"user",
+                                          @"host" : @"api",
+                                          @"style" : @"upload"
+                                        }
+                        dataStructSerialBlock:nil
+                      dataStructDeserialBlock:nil];
+  }
+  return DBPAPERDocsUpdate;
+}
+
++ (DBRoute *)DBPAPERDocsUsersAdd {
+  if (!DBPAPERDocsUsersAdd) {
+    DBPAPERDocsUsersAdd = [[DBRoute alloc] init:@"docs/users/add"
+        namespace_:@"paper"
+        deprecated:@YES
+        resultType:[NSArray<DBPAPERAddPaperDocUserMemberResult *> class]
+        errorType:[DBPAPERDocLookupError class]
+        attrs:@{
+          @"auth" : @"user",
+          @"host" : @"api",
+          @"style" : @"rpc"
+        }
+        dataStructSerialBlock:nil
+        dataStructDeserialBlock:^id(id dataStruct) {
+          return [DBArraySerializer deserialize:dataStruct
+                                      withBlock:^id(id elem0) {
+                                        return [DBPAPERAddPaperDocUserMemberResultSerializer deserialize:elem0];
+                                      }];
+        }];
+  }
+  return DBPAPERDocsUsersAdd;
+}
+
++ (DBRoute *)DBPAPERDocsUsersList {
+  if (!DBPAPERDocsUsersList) {
+    DBPAPERDocsUsersList = [[DBRoute alloc] init:@"docs/users/list"
+                                      namespace_:@"paper"
+                                      deprecated:@YES
+                                      resultType:[DBPAPERListUsersOnPaperDocResponse class]
+                                       errorType:[DBPAPERDocLookupError class]
+                                           attrs:@{
+                                             @"auth" : @"user",
+                                             @"host" : @"api",
+                                             @"style" : @"rpc"
+                                           }
+                           dataStructSerialBlock:nil
+                         dataStructDeserialBlock:nil];
+  }
+  return DBPAPERDocsUsersList;
+}
+
++ (DBRoute *)DBPAPERDocsUsersListContinue {
+  if (!DBPAPERDocsUsersListContinue) {
+    DBPAPERDocsUsersListContinue = [[DBRoute alloc] init:@"docs/users/list/continue"
+                                              namespace_:@"paper"
+                                              deprecated:@YES
+                                              resultType:[DBPAPERListUsersOnPaperDocResponse class]
+                                               errorType:[DBPAPERListUsersCursorError class]
+                                                   attrs:@{
+                                                     @"auth" : @"user",
+                                                     @"host" : @"api",
+                                                     @"style" : @"rpc"
+                                                   }
+                                   dataStructSerialBlock:nil
+                                 dataStructDeserialBlock:nil];
+  }
+  return DBPAPERDocsUsersListContinue;
+}
+
++ (DBRoute *)DBPAPERDocsUsersRemove {
+  if (!DBPAPERDocsUsersRemove) {
+    DBPAPERDocsUsersRemove = [[DBRoute alloc] init:@"docs/users/remove"
                                         namespace_:@"paper"
                                         deprecated:@YES
-                                        resultType:[DBPAPERPaperFolderCreateResult class]
-                                         errorType:[DBPAPERPaperFolderCreateError class]
+                                        resultType:nil
+                                         errorType:[DBPAPERDocLookupError class]
                                              attrs:@{
                                                @"auth" : @"user",
                                                @"host" : @"api",
@@ -405,9 +346,26 @@ static NSObject *lockObj = nil;
                                              }
                              dataStructSerialBlock:nil
                            dataStructDeserialBlock:nil];
-    }
-    return DBPAPERFoldersCreate;
   }
+  return DBPAPERDocsUsersRemove;
+}
+
++ (DBRoute *)DBPAPERFoldersCreate {
+  if (!DBPAPERFoldersCreate) {
+    DBPAPERFoldersCreate = [[DBRoute alloc] init:@"folders/create"
+                                      namespace_:@"paper"
+                                      deprecated:@YES
+                                      resultType:[DBPAPERPaperFolderCreateResult class]
+                                       errorType:[DBPAPERPaperFolderCreateError class]
+                                           attrs:@{
+                                             @"auth" : @"user",
+                                             @"host" : @"api",
+                                             @"style" : @"rpc"
+                                           }
+                           dataStructSerialBlock:nil
+                         dataStructDeserialBlock:nil];
+  }
+  return DBPAPERFoldersCreate;
 }
 
 @end

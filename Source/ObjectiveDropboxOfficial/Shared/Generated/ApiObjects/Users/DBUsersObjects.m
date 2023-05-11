@@ -1921,10 +1921,10 @@
   NSMutableDictionary *jsonDict = [[NSMutableDictionary alloc] init];
 
   if ([valueObj isIndividual]) {
-    [jsonDict addEntriesFromDictionary:[DBUSERSIndividualSpaceAllocationSerializer serialize:valueObj.individual]];
+    jsonDict = [[DBUSERSIndividualSpaceAllocationSerializer serialize:valueObj.individual] mutableCopy];
     jsonDict[@".tag"] = @"individual";
   } else if ([valueObj isTeam]) {
-    [jsonDict addEntriesFromDictionary:[DBUSERSTeamSpaceAllocationSerializer serialize:valueObj.team]];
+    jsonDict = [[DBUSERSTeamSpaceAllocationSerializer serialize:valueObj.team] mutableCopy];
     jsonDict[@".tag"] = @"team";
   } else if ([valueObj isOther]) {
     jsonDict[@".tag"] = @"other";

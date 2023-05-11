@@ -4231,7 +4231,7 @@
     jsonDict[@".tag"] = @"no_update";
   } else if ([valueObj isUpdate]) {
     if (valueObj.update) {
-      [jsonDict addEntriesFromDictionary:[DBFILEREQUESTSFileRequestDeadlineSerializer serialize:valueObj.update]];
+      jsonDict = [[DBFILEREQUESTSFileRequestDeadlineSerializer serialize:valueObj.update] mutableCopy];
     }
     jsonDict[@".tag"] = @"update";
   } else if ([valueObj isOther]) {

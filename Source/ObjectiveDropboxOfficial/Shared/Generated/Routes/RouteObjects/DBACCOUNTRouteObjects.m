@@ -15,32 +15,22 @@
 
 static DBRoute *DBACCOUNTSetProfilePhoto;
 
-static NSObject *lockObj = nil;
-+ (void)initialize {
-  static dispatch_once_t onceToken;
-  dispatch_once(&onceToken, ^{
-    lockObj = [[NSObject alloc] init];
-  });
-}
-
 + (DBRoute *)DBACCOUNTSetProfilePhoto {
-  @synchronized(lockObj) {
-    if (!DBACCOUNTSetProfilePhoto) {
-      DBACCOUNTSetProfilePhoto = [[DBRoute alloc] init:@"set_profile_photo"
-                                            namespace_:@"account"
-                                            deprecated:@NO
-                                            resultType:[DBACCOUNTSetProfilePhotoResult class]
-                                             errorType:[DBACCOUNTSetProfilePhotoError class]
-                                                 attrs:@{
-                                                   @"auth" : @"user",
-                                                   @"host" : @"api",
-                                                   @"style" : @"rpc"
-                                                 }
-                                 dataStructSerialBlock:nil
-                               dataStructDeserialBlock:nil];
-    }
-    return DBACCOUNTSetProfilePhoto;
+  if (!DBACCOUNTSetProfilePhoto) {
+    DBACCOUNTSetProfilePhoto = [[DBRoute alloc] init:@"set_profile_photo"
+                                          namespace_:@"account"
+                                          deprecated:@NO
+                                          resultType:[DBACCOUNTSetProfilePhotoResult class]
+                                           errorType:[DBACCOUNTSetProfilePhotoError class]
+                                               attrs:@{
+                                                 @"auth" : @"user",
+                                                 @"host" : @"api",
+                                                 @"style" : @"rpc"
+                                               }
+                               dataStructSerialBlock:nil
+                             dataStructDeserialBlock:nil];
   }
+  return DBACCOUNTSetProfilePhoto;
 }
 
 @end

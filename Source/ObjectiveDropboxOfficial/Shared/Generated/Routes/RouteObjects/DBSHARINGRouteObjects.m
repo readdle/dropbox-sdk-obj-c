@@ -16,6 +16,7 @@
 #import "DBSHARINGAddFileMemberError.h"
 #import "DBSHARINGAddFolderMemberError.h"
 #import "DBSHARINGAddMemberSelectorError.h"
+#import "DBSHARINGAppAuthRoutes.h"
 #import "DBSHARINGCreateSharedLinkError.h"
 #import "DBSHARINGCreateSharedLinkWithSettingsError.h"
 #import "DBSHARINGExpectedSharedContentLinkMetadata.h"
@@ -359,7 +360,7 @@ static DBRoute *DBSHARINGUpdateFolderPolicy;
                                                 resultType:[DBSHARINGSharedLinkMetadata class]
                                                  errorType:[DBSHARINGSharedLinkError class]
                                                      attrs:@{
-                                                       @"auth" : @"user",
+                                                       @"auth" : @"app, user",
                                                        @"host" : @"api",
                                                        @"style" : @"rpc"
                                                      }

@@ -14,7 +14,7 @@ Pod::Spec.new do |s|
   s.requires_arc = true
   
   s.osx.deployment_target = '10.13'
-  s.ios.deployment_target = '11.0'
+  s.ios.deployment_target = '13.0'
  
   s.public_header_files = 'Source/ObjectiveDropboxOfficial/Shared/**/*.h', 'Source/ObjectiveDropboxOfficial/Headers/Umbrella/*.h'
   s.osx.public_header_files = 'Source/ObjectiveDropboxOfficial/Platform/ObjectiveDropboxOfficial_macOS/**/*.h'

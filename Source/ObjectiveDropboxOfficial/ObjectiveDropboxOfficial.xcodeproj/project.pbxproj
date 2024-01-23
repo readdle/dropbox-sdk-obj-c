@@ -11,6 +11,8 @@
 		3C3C29751F7D757E00C54011 /* DBTransportBaseHostnameConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C3C29721F7D757E00C54011 /* DBTransportBaseHostnameConfig.m */; };
 		3C3C29761F7D758E00C54011 /* DBTransportBaseHostnameConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C3C29731F7D757E00C54011 /* DBTransportBaseHostnameConfig.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3C3C29771F7D758E00C54011 /* DBTransportBaseHostnameConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C3C29731F7D757E00C54011 /* DBTransportBaseHostnameConfig.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		405B21012B5FF56C00E480EB /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 405B21002B5FF56C00E480EB /* PrivacyInfo.xcprivacy */; };
+		405B21022B5FF56C00E480EB /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 405B21002B5FF56C00E480EB /* PrivacyInfo.xcprivacy */; };
 		63FB27AA22BDD97A0062BA22 /* DBSDKImports-iOS.h in Headers */ = {isa = PBXBuildFile; fileRef = F235B51F1E29913600144F8B /* DBSDKImports-iOS.h */; };
 		BF33F92824873F12001F4072 /* DBOAuthPKCESession.m in Sources */ = {isa = PBXBuildFile; fileRef = BF33F92024873F10001F4072 /* DBOAuthPKCESession.m */; };
 		BF33F92924873F12001F4072 /* DBOAuthPKCESession.m in Sources */ = {isa = PBXBuildFile; fileRef = BF33F92024873F10001F4072 /* DBOAuthPKCESession.m */; };
@@ -4352,6 +4354,7 @@
 /* Begin PBXFileReference section */
 		3C3C29721F7D757E00C54011 /* DBTransportBaseHostnameConfig.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBTransportBaseHostnameConfig.m; sourceTree = "<group>"; };
 		3C3C29731F7D757E00C54011 /* DBTransportBaseHostnameConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBTransportBaseHostnameConfig.h; sourceTree = "<group>"; };
+		405B21002B5FF56C00E480EB /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		BF33F92024873F10001F4072 /* DBOAuthPKCESession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBOAuthPKCESession.m; sourceTree = "<group>"; };
 		BF33F92124873F11001F4072 /* DBOAuthConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBOAuthConstants.m; sourceTree = "<group>"; };
 		BF33F92224873F11001F4072 /* DBOAuthUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBOAuthUtils.m; sourceTree = "<group>"; };
@@ -6650,6 +6653,7 @@
 				F235B5341E29917E00144F8B /* Headers */,
 				F235B5191E29912D00144F8B /* Platform */,
 				F2977DCB1E03692600876A73 /* Shared */,
+				405B21002B5FF56C00E480EB /* PrivacyInfo.xcprivacy */,
 				F27DE9B31D7FF0A5003B1CEE /* Frameworks */,
 				F26B75761D7F6AF700714F70 /* Products */,
 			);
@@ -13531,6 +13535,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				405B21012B5FF56C00E480EB /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13538,6 +13543,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				405B21022B5FF56C00E480EB /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

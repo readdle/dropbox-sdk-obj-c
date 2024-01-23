@@ -6,9 +6,6 @@ Pod::Spec.new do |s|
   s.license      = 'MIT'
   s.author       = { 'Stephen Cobbe' => 'scobbe@dropbox.com' }
   s.source       = { :git => 'https://github.com/readdle/dropbox-sdk-obj-c.git', :tag => s.version }
-  s.resource_bundle = {
-      "ObjectiveDropboxOfficial" => "Source/ObjectiveDropboxOfficial/PrivacyInfo.xcprivacy"
-  }
 
   s.source_files = 'Source/ObjectiveDropboxOfficial/Shared/**/*.{h,m}', 'Source/ObjectiveDropboxOfficial/Headers/**/*.h'
   s.osx.source_files =  'Source/ObjectiveDropboxOfficial/Platform/ObjectiveDropboxOfficial_macOS/**/*.{h,m}'
@@ -27,4 +24,6 @@ Pod::Spec.new do |s|
 
   s.osx.frameworks = 'AppKit', 'SystemConfiguration', 'Foundation'
   s.ios.frameworks = 'UIKit', 'SafariServices', 'SystemConfiguration', 'Foundation'
+
+  s.resource_bundle = { "ObjectiveDropboxOfficial_Privacy" => "Source/ObjectiveDropboxOfficial/PrivacyInfo.xcprivacy" }
 end

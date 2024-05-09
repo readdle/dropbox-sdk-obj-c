@@ -17,6 +17,7 @@
 static DBRoute *DBOPENIDUserinfo;
 
 + (DBRoute *)DBOPENIDUserinfo {
+<<<<<<< HEAD
   if (!DBOPENIDUserinfo) {
     DBOPENIDUserinfo = [[DBRoute alloc] init:@"userinfo"
                                   namespace_:@"openid"
@@ -30,6 +31,20 @@ static DBRoute *DBOPENIDUserinfo;
                                        }
                        dataStructSerialBlock:nil
                      dataStructDeserialBlock:nil];
+=======
+  @synchronized(lockObj) {
+    if (!DBOPENIDUserinfo) {
+      DBOPENIDUserinfo = [[DBRoute alloc] init:@"userinfo"
+                                    namespace_:@"openid"
+                                    deprecated:@NO
+                                    resultType:[DBOPENIDUserInfoResult class]
+                                     errorType:[DBOPENIDUserInfoError class]
+                                         attrs:@{@"auth" : @"user", @"host" : @"api", @"style" : @"rpc"}
+                         dataStructSerialBlock:nil
+                       dataStructDeserialBlock:nil];
+    }
+    return DBOPENIDUserinfo;
+>>>>>>> master
   }
   return DBOPENIDUserinfo;
 }

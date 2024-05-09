@@ -1,6 +1,10 @@
 Pod::Spec.new do |s|
   s.name         = 'ObjectiveDropboxOfficial'
+<<<<<<< HEAD
   s.version      = '7.1.1'
+=======
+  s.version      = '7.3.1'
+>>>>>>> master
   s.summary      = 'Dropbox Objective C SDK for APIv2'
   s.homepage     = 'https://www.dropbox.com/developers'
   s.license      = 'MIT'
@@ -10,11 +14,19 @@ Pod::Spec.new do |s|
   s.source_files = 'Source/ObjectiveDropboxOfficial/Shared/**/*.{h,m}', 'Source/ObjectiveDropboxOfficial/Headers/**/*.h'
   s.osx.source_files =  'Source/ObjectiveDropboxOfficial/Platform/ObjectiveDropboxOfficial_macOS/**/*.{h,m}'
   s.ios.source_files = 'Source/ObjectiveDropboxOfficial/Platform/ObjectiveDropboxOfficial_iOS/**/*.{h,m}'
+
+  s.resource_bundles = {
+    'ObjectiveDropboxPrivacyInfo' => ['Source/ObjectiveDropboxOfficial/PrivacyInfo.xcprivacy'],
+  }
   
   s.requires_arc = true
   
   s.osx.deployment_target = '10.13'
+<<<<<<< HEAD
   s.ios.deployment_target = '13.0'
+=======
+  s.ios.deployment_target = '11.0'
+>>>>>>> master
  
   s.public_header_files = 'Source/ObjectiveDropboxOfficial/Shared/**/*.h', 'Source/ObjectiveDropboxOfficial/Headers/Umbrella/*.h'
   s.osx.public_header_files = 'Source/ObjectiveDropboxOfficial/Platform/ObjectiveDropboxOfficial_macOS/**/*.h'

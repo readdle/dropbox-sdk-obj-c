@@ -4331,8 +4331,8 @@
     }
   }
   if (self.audienceRestrictingSharedFolder) {
-    if (![self.audienceRestrictingSharedFolder
-            isEqual:aSharedContentLinkMetadataBase.audienceRestrictingSharedFolder]) {
+    if (!
+        [self.audienceRestrictingSharedFolder isEqual:aSharedContentLinkMetadataBase.audienceRestrictingSharedFolder]) {
       return NO;
     }
   }
@@ -7860,8 +7860,8 @@
                                                                 stringValidator:@(1)
                                                                       maxLength:nil
                                                                         pattern:@"((/"
-                                                                                @"|id:).*|nspath:[0-9]+:.*)|ns:[0-9]+("
-                                                                                @"/.*)?"]]]](files);
+                                                                                @"|id:).*|nspath:[0-9]+:.*)|ns:[0-9]+(/"
+                                                                                @".*)?"]]]](files);
   [DBStoneValidators
    nullableValidator:[DBStoneValidators arrayValidator:nil
                                               maxItems:nil
@@ -13739,8 +13739,8 @@
                                                                 stringValidator:@(1)
                                                                       maxLength:nil
                                                                         pattern:@"((/"
-                                                                                @"|id:).*|nspath:[0-9]+:.*)|ns:[0-9]+("
-                                                                                @"/.*)?"]]]](files);
+                                                                                @"|id:).*|nspath:[0-9]+:.*)|ns:[0-9]+(/"
+                                                                                @".*)?"]]]](files);
 
   self = [super init];
   if (self) {

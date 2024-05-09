@@ -16,6 +16,7 @@
 static DBRoute *DBACCOUNTSetProfilePhoto;
 
 + (DBRoute *)DBACCOUNTSetProfilePhoto {
+<<<<<<< HEAD
   if (!DBACCOUNTSetProfilePhoto) {
     DBACCOUNTSetProfilePhoto = [[DBRoute alloc] init:@"set_profile_photo"
                                           namespace_:@"account"
@@ -29,6 +30,20 @@ static DBRoute *DBACCOUNTSetProfilePhoto;
                                                }
                                dataStructSerialBlock:nil
                              dataStructDeserialBlock:nil];
+=======
+  @synchronized(lockObj) {
+    if (!DBACCOUNTSetProfilePhoto) {
+      DBACCOUNTSetProfilePhoto = [[DBRoute alloc] init:@"set_profile_photo"
+                                            namespace_:@"account"
+                                            deprecated:@NO
+                                            resultType:[DBACCOUNTSetProfilePhotoResult class]
+                                             errorType:[DBACCOUNTSetProfilePhotoError class]
+                                                 attrs:@{@"auth" : @"user", @"host" : @"api", @"style" : @"rpc"}
+                                 dataStructSerialBlock:nil
+                               dataStructDeserialBlock:nil];
+    }
+    return DBACCOUNTSetProfilePhoto;
+>>>>>>> master
   }
   return DBACCOUNTSetProfilePhoto;
 }

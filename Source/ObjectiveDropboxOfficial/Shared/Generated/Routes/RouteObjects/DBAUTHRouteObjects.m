@@ -18,6 +18,7 @@ static DBRoute *DBAUTHTokenFromOauth1;
 static DBRoute *DBAUTHTokenRevoke;
 
 + (DBRoute *)DBAUTHTokenFromOauth1 {
+<<<<<<< HEAD
   if (!DBAUTHTokenFromOauth1) {
     DBAUTHTokenFromOauth1 = [[DBRoute alloc] init:@"token/from_oauth1"
                                        namespace_:@"auth"
@@ -31,11 +32,26 @@ static DBRoute *DBAUTHTokenRevoke;
                                             }
                             dataStructSerialBlock:nil
                           dataStructDeserialBlock:nil];
+=======
+  @synchronized(lockObj) {
+    if (!DBAUTHTokenFromOauth1) {
+      DBAUTHTokenFromOauth1 = [[DBRoute alloc] init:@"token/from_oauth1"
+                                         namespace_:@"auth"
+                                         deprecated:@YES
+                                         resultType:[DBAUTHTokenFromOAuth1Result class]
+                                          errorType:[DBAUTHTokenFromOAuth1Error class]
+                                              attrs:@{@"auth" : @"app", @"host" : @"api", @"style" : @"rpc"}
+                              dataStructSerialBlock:nil
+                            dataStructDeserialBlock:nil];
+    }
+    return DBAUTHTokenFromOauth1;
+>>>>>>> master
   }
   return DBAUTHTokenFromOauth1;
 }
 
 + (DBRoute *)DBAUTHTokenRevoke {
+<<<<<<< HEAD
   if (!DBAUTHTokenRevoke) {
     DBAUTHTokenRevoke = [[DBRoute alloc] init:@"token/revoke"
                                    namespace_:@"auth"
@@ -49,6 +65,20 @@ static DBRoute *DBAUTHTokenRevoke;
                                         }
                         dataStructSerialBlock:nil
                       dataStructDeserialBlock:nil];
+=======
+  @synchronized(lockObj) {
+    if (!DBAUTHTokenRevoke) {
+      DBAUTHTokenRevoke = [[DBRoute alloc] init:@"token/revoke"
+                                     namespace_:@"auth"
+                                     deprecated:@NO
+                                     resultType:nil
+                                      errorType:nil
+                                          attrs:@{@"auth" : @"user", @"host" : @"api", @"style" : @"rpc"}
+                          dataStructSerialBlock:nil
+                        dataStructDeserialBlock:nil];
+    }
+    return DBAUTHTokenRevoke;
+>>>>>>> master
   }
   return DBAUTHTokenRevoke;
 }

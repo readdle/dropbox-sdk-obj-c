@@ -17,6 +17,7 @@ static DBRoute *DBCHECKApp;
 static DBRoute *DBCHECKUser;
 
 + (DBRoute *)DBCHECKApp {
+<<<<<<< HEAD
   if (!DBCHECKApp) {
     DBCHECKApp = [[DBRoute alloc] init:@"app"
                             namespace_:@"check"
@@ -30,11 +31,26 @@ static DBRoute *DBCHECKUser;
                                  }
                  dataStructSerialBlock:nil
                dataStructDeserialBlock:nil];
+=======
+  @synchronized(lockObj) {
+    if (!DBCHECKApp) {
+      DBCHECKApp = [[DBRoute alloc] init:@"app"
+                              namespace_:@"check"
+                              deprecated:@NO
+                              resultType:[DBCHECKEchoResult class]
+                               errorType:nil
+                                   attrs:@{@"auth" : @"app", @"host" : @"api", @"style" : @"rpc"}
+                   dataStructSerialBlock:nil
+                 dataStructDeserialBlock:nil];
+    }
+    return DBCHECKApp;
+>>>>>>> master
   }
   return DBCHECKApp;
 }
 
 + (DBRoute *)DBCHECKUser {
+<<<<<<< HEAD
   if (!DBCHECKUser) {
     DBCHECKUser = [[DBRoute alloc] init:@"user"
                              namespace_:@"check"
@@ -48,6 +64,20 @@ static DBRoute *DBCHECKUser;
                                   }
                   dataStructSerialBlock:nil
                 dataStructDeserialBlock:nil];
+=======
+  @synchronized(lockObj) {
+    if (!DBCHECKUser) {
+      DBCHECKUser = [[DBRoute alloc] init:@"user"
+                               namespace_:@"check"
+                               deprecated:@NO
+                               resultType:[DBCHECKEchoResult class]
+                                errorType:nil
+                                    attrs:@{@"auth" : @"user", @"host" : @"api", @"style" : @"rpc"}
+                    dataStructSerialBlock:nil
+                  dataStructDeserialBlock:nil];
+    }
+    return DBCHECKUser;
+>>>>>>> master
   }
   return DBCHECKUser;
 }

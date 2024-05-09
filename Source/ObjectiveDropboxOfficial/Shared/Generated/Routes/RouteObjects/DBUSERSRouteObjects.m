@@ -32,176 +32,76 @@ static DBRoute *DBUSERSGetCurrentAccount;
 static DBRoute *DBUSERSGetSpaceUsage;
 
 + (DBRoute *)DBUSERSFeaturesGetValues {
-<<<<<<< HEAD
   if (!DBUSERSFeaturesGetValues) {
     DBUSERSFeaturesGetValues = [[DBRoute alloc] init:@"features/get_values"
                                           namespace_:@"users"
                                           deprecated:@NO
                                           resultType:[DBUSERSUserFeaturesGetValuesBatchResult class]
                                            errorType:[DBUSERSUserFeaturesGetValuesBatchError class]
-                                               attrs:@{
-                                                 @"auth" : @"user",
-                                                 @"host" : @"api",
-                                                 @"style" : @"rpc"
-                                               }
+                                               attrs:@{@"auth" : @"user", @"host" : @"api", @"style" : @"rpc"}
                                dataStructSerialBlock:nil
                              dataStructDeserialBlock:nil];
-=======
-  @synchronized(lockObj) {
-    if (!DBUSERSFeaturesGetValues) {
-      DBUSERSFeaturesGetValues = [[DBRoute alloc] init:@"features/get_values"
-                                            namespace_:@"users"
-                                            deprecated:@NO
-                                            resultType:[DBUSERSUserFeaturesGetValuesBatchResult class]
-                                             errorType:[DBUSERSUserFeaturesGetValuesBatchError class]
-                                                 attrs:@{@"auth" : @"user", @"host" : @"api", @"style" : @"rpc"}
-                                 dataStructSerialBlock:nil
-                               dataStructDeserialBlock:nil];
-    }
-    return DBUSERSFeaturesGetValues;
->>>>>>> master
   }
   return DBUSERSFeaturesGetValues;
 }
 
 + (DBRoute *)DBUSERSGetAccount {
-<<<<<<< HEAD
   if (!DBUSERSGetAccount) {
     DBUSERSGetAccount = [[DBRoute alloc] init:@"get_account"
                                    namespace_:@"users"
                                    deprecated:@NO
                                    resultType:[DBUSERSBasicAccount class]
                                     errorType:[DBUSERSGetAccountError class]
-                                        attrs:@{
-                                          @"auth" : @"user",
-                                          @"host" : @"api",
-                                          @"style" : @"rpc"
-                                        }
+                                        attrs:@{@"auth" : @"user", @"host" : @"api", @"style" : @"rpc"}
                         dataStructSerialBlock:nil
                       dataStructDeserialBlock:nil];
-=======
-  @synchronized(lockObj) {
-    if (!DBUSERSGetAccount) {
-      DBUSERSGetAccount = [[DBRoute alloc] init:@"get_account"
-                                     namespace_:@"users"
-                                     deprecated:@NO
-                                     resultType:[DBUSERSBasicAccount class]
-                                      errorType:[DBUSERSGetAccountError class]
-                                          attrs:@{@"auth" : @"user", @"host" : @"api", @"style" : @"rpc"}
-                          dataStructSerialBlock:nil
-                        dataStructDeserialBlock:nil];
-    }
-    return DBUSERSGetAccount;
->>>>>>> master
   }
   return DBUSERSGetAccount;
 }
 
 + (DBRoute *)DBUSERSGetAccountBatch {
-<<<<<<< HEAD
   if (!DBUSERSGetAccountBatch) {
     DBUSERSGetAccountBatch = [[DBRoute alloc] init:@"get_account_batch"
-        namespace_:@"users"
-        deprecated:@NO
-        resultType:[NSArray<DBUSERSBasicAccount *> class]
-        errorType:[DBUSERSGetAccountBatchError class]
-        attrs:@{
-          @"auth" : @"user",
-          @"host" : @"api",
-          @"style" : @"rpc"
-        }
-        dataStructSerialBlock:nil
-        dataStructDeserialBlock:^id(id dataStruct) {
-          return [DBArraySerializer deserialize:dataStruct
-                                      withBlock:^id(id elem0) {
-                                        return [DBUSERSBasicAccountSerializer deserialize:elem0];
-                                      }];
-        }];
-=======
-  @synchronized(lockObj) {
-    if (!DBUSERSGetAccountBatch) {
-      DBUSERSGetAccountBatch = [[DBRoute alloc] init:@"get_account_batch"
-                                          namespace_:@"users"
-                                          deprecated:@NO
-                                          resultType:[NSArray<DBUSERSBasicAccount *> class]
-                                           errorType:[DBUSERSGetAccountBatchError class]
-                                               attrs:@{@"auth" : @"user", @"host" : @"api", @"style" : @"rpc"}
-                               dataStructSerialBlock:nil
-                             dataStructDeserialBlock:^id(id dataStruct) {
-                               return [DBArraySerializer deserialize:dataStruct
-                                                           withBlock:^id(id elem0) {
-                                                             return [DBUSERSBasicAccountSerializer deserialize:elem0];
-                                                           }];
-                             }];
-    }
-    return DBUSERSGetAccountBatch;
->>>>>>> master
+                                        namespace_:@"users"
+                                        deprecated:@NO
+                                        resultType:[NSArray<DBUSERSBasicAccount *> class]
+                                         errorType:[DBUSERSGetAccountBatchError class]
+                                             attrs:@{@"auth" : @"user", @"host" : @"api", @"style" : @"rpc"}
+                             dataStructSerialBlock:nil
+                           dataStructDeserialBlock:^id(id dataStruct) {
+                             return [DBArraySerializer deserialize:dataStruct
+                                                         withBlock:^id(id elem0) {
+                                                           return [DBUSERSBasicAccountSerializer deserialize:elem0];
+                                                         }];
+                           }];
   }
   return DBUSERSGetAccountBatch;
 }
 
 + (DBRoute *)DBUSERSGetCurrentAccount {
-<<<<<<< HEAD
   if (!DBUSERSGetCurrentAccount) {
     DBUSERSGetCurrentAccount = [[DBRoute alloc] init:@"get_current_account"
                                           namespace_:@"users"
                                           deprecated:@NO
                                           resultType:[DBUSERSFullAccount class]
                                            errorType:nil
-                                               attrs:@{
-                                                 @"auth" : @"user",
-                                                 @"host" : @"api",
-                                                 @"style" : @"rpc"
-                                               }
+                                               attrs:@{@"auth" : @"user", @"host" : @"api", @"style" : @"rpc"}
                                dataStructSerialBlock:nil
                              dataStructDeserialBlock:nil];
-=======
-  @synchronized(lockObj) {
-    if (!DBUSERSGetCurrentAccount) {
-      DBUSERSGetCurrentAccount = [[DBRoute alloc] init:@"get_current_account"
-                                            namespace_:@"users"
-                                            deprecated:@NO
-                                            resultType:[DBUSERSFullAccount class]
-                                             errorType:nil
-                                                 attrs:@{@"auth" : @"user", @"host" : @"api", @"style" : @"rpc"}
-                                 dataStructSerialBlock:nil
-                               dataStructDeserialBlock:nil];
-    }
-    return DBUSERSGetCurrentAccount;
->>>>>>> master
   }
   return DBUSERSGetCurrentAccount;
 }
 
 + (DBRoute *)DBUSERSGetSpaceUsage {
-<<<<<<< HEAD
   if (!DBUSERSGetSpaceUsage) {
     DBUSERSGetSpaceUsage = [[DBRoute alloc] init:@"get_space_usage"
                                       namespace_:@"users"
                                       deprecated:@NO
                                       resultType:[DBUSERSSpaceUsage class]
                                        errorType:nil
-                                           attrs:@{
-                                             @"auth" : @"user",
-                                             @"host" : @"api",
-                                             @"style" : @"rpc"
-                                           }
+                                           attrs:@{@"auth" : @"user", @"host" : @"api", @"style" : @"rpc"}
                            dataStructSerialBlock:nil
                          dataStructDeserialBlock:nil];
-=======
-  @synchronized(lockObj) {
-    if (!DBUSERSGetSpaceUsage) {
-      DBUSERSGetSpaceUsage = [[DBRoute alloc] init:@"get_space_usage"
-                                        namespace_:@"users"
-                                        deprecated:@NO
-                                        resultType:[DBUSERSSpaceUsage class]
-                                         errorType:nil
-                                             attrs:@{@"auth" : @"user", @"host" : @"api", @"style" : @"rpc"}
-                             dataStructSerialBlock:nil
-                           dataStructDeserialBlock:nil];
-    }
-    return DBUSERSGetSpaceUsage;
->>>>>>> master
   }
   return DBUSERSGetSpaceUsage;
 }

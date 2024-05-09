@@ -168,11 +168,7 @@ brew install carthage
 
 ```
 # ObjectiveDropboxOfficial
-<<<<<<< HEAD
-github "https://github.com/dropbox/dropbox-sdk-obj-c" ~> 7.1.1
-=======
 github "https://github.com/dropbox/dropbox-sdk-obj-c" ~> 7.3.1
->>>>>>> master
 ```
 
 To integrate the Dropbox Objective-C SDK into your project, take the following steps:

@@ -22,11 +22,7 @@ static DBRoute *DBACCOUNTSetProfilePhoto;
                                           deprecated:@NO
                                           resultType:[DBACCOUNTSetProfilePhotoResult class]
                                            errorType:[DBACCOUNTSetProfilePhotoError class]
-                                               attrs:@{
-                                                 @"auth" : @"user",
-                                                 @"host" : @"api",
-                                                 @"style" : @"rpc"
-                                               }
+                                               attrs:@{@"auth" : @"user", @"host" : @"api", @"style" : @"rpc"}
                                dataStructSerialBlock:nil
                              dataStructDeserialBlock:nil];
   }

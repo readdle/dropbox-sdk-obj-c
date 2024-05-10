@@ -63,7 +63,7 @@
 }
 
 + (NSError *)dropboxBadResponseErrorWithException:(NSException *)exception {
-  return [NSError errorWithDomain:@"dropbox.com" code:0 userInfo:@{ @"error_message" : exception }];
+  return [NSError errorWithDomain:@"dropbox.com" code:0 userInfo:@{@"error_message" : exception}];
 }
 
 @end
@@ -309,8 +309,8 @@
     NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
     int statusCode = (int)httpResponse.statusCode;
     NSDictionary *httpHeaders = httpResponse.allHeaderFields;
-    id headerString =
-        [DBTransportBaseClient caseInsensitiveLookupWithKey:@"Dropbox-API-Result" headerFieldsDictionary:httpHeaders];
+    id headerString = [DBTransportBaseClient caseInsensitiveLookupWithKey:@"Dropbox-API-Result"
+                                                   headerFieldsDictionary:httpHeaders];
 
     NSData *resultData = nil;
     if ([headerString isKindOfClass:[NSString class]]) {
@@ -445,8 +445,8 @@
     NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
     int statusCode = (int)httpResponse.statusCode;
     NSDictionary *httpHeaders = httpResponse.allHeaderFields;
-    id headerString =
-        [DBTransportBaseClient caseInsensitiveLookupWithKey:@"Dropbox-API-Result" headerFieldsDictionary:httpHeaders];
+    id headerString = [DBTransportBaseClient caseInsensitiveLookupWithKey:@"Dropbox-API-Result"
+                                                   headerFieldsDictionary:httpHeaders];
 
     NSData *resultData = nil;
     if ([headerString isKindOfClass:[NSString class]]) {
@@ -479,8 +479,9 @@
     } else {
       NSError *serializationError;
       @try {
-        result =
-            [DBTransportBaseClient routeResultWithRoute:route data:resultData serializationError:&serializationError];
+        result = [DBTransportBaseClient routeResultWithRoute:route
+                                                        data:resultData
+                                          serializationError:&serializationError];
       } @catch (NSException *exception) {
         serializationError = [[strongSelf class] dropboxBadResponseErrorWithException:exception];
       }

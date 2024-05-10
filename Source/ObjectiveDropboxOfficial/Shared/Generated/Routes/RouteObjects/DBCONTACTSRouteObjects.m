@@ -22,11 +22,7 @@ static DBRoute *DBCONTACTSDeleteManualContactsBatch;
                                                 deprecated:@NO
                                                 resultType:nil
                                                  errorType:nil
-                                                     attrs:@{
-                                                       @"auth" : @"user",
-                                                       @"host" : @"api",
-                                                       @"style" : @"rpc"
-                                                     }
+                                                     attrs:@{@"auth" : @"user", @"host" : @"api", @"style" : @"rpc"}
                                      dataStructSerialBlock:nil
                                    dataStructDeserialBlock:nil];
   }
@@ -35,18 +31,15 @@ static DBRoute *DBCONTACTSDeleteManualContactsBatch;
 
 + (DBRoute *)DBCONTACTSDeleteManualContactsBatch {
   if (!DBCONTACTSDeleteManualContactsBatch) {
-    DBCONTACTSDeleteManualContactsBatch = [[DBRoute alloc] init:@"delete_manual_contacts_batch"
-                                                     namespace_:@"contacts"
-                                                     deprecated:@NO
-                                                     resultType:nil
-                                                      errorType:[DBCONTACTSDeleteManualContactsError class]
-                                                          attrs:@{
-                                                            @"auth" : @"user",
-                                                            @"host" : @"api",
-                                                            @"style" : @"rpc"
-                                                          }
-                                          dataStructSerialBlock:nil
-                                        dataStructDeserialBlock:nil];
+    DBCONTACTSDeleteManualContactsBatch =
+        [[DBRoute alloc] init:@"delete_manual_contacts_batch"
+                         namespace_:@"contacts"
+                         deprecated:@NO
+                         resultType:nil
+                          errorType:[DBCONTACTSDeleteManualContactsError class]
+                              attrs:@{@"auth" : @"user", @"host" : @"api", @"style" : @"rpc"}
+              dataStructSerialBlock:nil
+            dataStructDeserialBlock:nil];
   }
   return DBCONTACTSDeleteManualContactsBatch;
 }

@@ -24,11 +24,7 @@ static DBRoute *DBAUTHTokenRevoke;
                                        deprecated:@YES
                                        resultType:[DBAUTHTokenFromOAuth1Result class]
                                         errorType:[DBAUTHTokenFromOAuth1Error class]
-                                            attrs:@{
-                                              @"auth" : @"app",
-                                              @"host" : @"api",
-                                              @"style" : @"rpc"
-                                            }
+                                            attrs:@{@"auth" : @"app", @"host" : @"api", @"style" : @"rpc"}
                             dataStructSerialBlock:nil
                           dataStructDeserialBlock:nil];
   }
@@ -42,11 +38,7 @@ static DBRoute *DBAUTHTokenRevoke;
                                    deprecated:@NO
                                    resultType:nil
                                     errorType:nil
-                                        attrs:@{
-                                          @"auth" : @"user",
-                                          @"host" : @"api",
-                                          @"style" : @"rpc"
-                                        }
+                                        attrs:@{@"auth" : @"user", @"host" : @"api", @"style" : @"rpc"}
                         dataStructSerialBlock:nil
                       dataStructDeserialBlock:nil];
   }

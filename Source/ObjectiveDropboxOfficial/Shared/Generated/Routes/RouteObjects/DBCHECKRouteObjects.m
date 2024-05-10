@@ -23,11 +23,7 @@ static DBRoute *DBCHECKUser;
                             deprecated:@NO
                             resultType:[DBCHECKEchoResult class]
                              errorType:nil
-                                 attrs:@{
-                                   @"auth" : @"app",
-                                   @"host" : @"api",
-                                   @"style" : @"rpc"
-                                 }
+                                 attrs:@{@"auth" : @"app", @"host" : @"api", @"style" : @"rpc"}
                  dataStructSerialBlock:nil
                dataStructDeserialBlock:nil];
   }
@@ -41,11 +37,7 @@ static DBRoute *DBCHECKUser;
                              deprecated:@NO
                              resultType:[DBCHECKEchoResult class]
                               errorType:nil
-                                  attrs:@{
-                                    @"auth" : @"user",
-                                    @"host" : @"api",
-                                    @"style" : @"rpc"
-                                  }
+                                  attrs:@{@"auth" : @"user", @"host" : @"api", @"style" : @"rpc"}
                   dataStructSerialBlock:nil
                 dataStructDeserialBlock:nil];
   }

@@ -47,12 +47,11 @@ static NSString *kStorageKeyPrefix = @"dbxOpenWith";
   }
   [[NSUserDefaults standardUserDefaults] removeObjectForKey:fullKey];
   [[NSUserDefaults standardUserDefaults] synchronize];
-  DBOpenWithInfo *openWithInfo = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-  return openWithInfo;
+  return [NSKeyedUnarchiver unarchivedObjectOfClass:DBOpenWithInfo.class fromData:data error:nil];
 }
 
 - (void)writeToStorageForSession:(NSString *)sessionId {
-  NSData *data = [NSKeyedArchiver archivedDataWithRootObject:self];
+  NSData *data = [NSKeyedArchiver archivedDataWithRootObject:self requiringSecureCoding:NO error:nil];
   [[NSUserDefaults standardUserDefaults] setObject:data forKey:[DBOpenWithInfo getStorageKeyFromSession:sessionId]];
   [[NSUserDefaults standardUserDefaults] synchronize];
 }

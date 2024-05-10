@@ -15,13 +15,8 @@
 - (instancetype)init {
   self = [super initWithNibName:nil bundle:nil];
   if (self) {
-    if (@available(iOS 13.0, *)) {
-      _loadingSpinner =
-          [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleLarge];
-    } else {
-      _loadingSpinner =
-          [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-    }
+    _loadingSpinner =
+      [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleLarge];
   }
   return self;
 }

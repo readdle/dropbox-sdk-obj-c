@@ -109,21 +109,6 @@ static DBRoute *DBFILEREQUESTSUpdate;
 }
 
 + (DBRoute *)DBFILEREQUESTSList {
-  @synchronized(lockObj) {
-    if (!DBFILEREQUESTSList) {
-      DBFILEREQUESTSList = [[DBRoute alloc] init:@"list"
-                                      namespace_:@"file_requests"
-                                      deprecated:@NO
-                                      resultType:[DBFILEREQUESTSListFileRequestsV2Result class]
-                                       errorType:[DBFILEREQUESTSListFileRequestsError class]
-                                           attrs:@{@"auth" : @"user", @"host" : @"api", @"style" : @"rpc"}
-                           dataStructSerialBlock:nil
-                         dataStructDeserialBlock:nil];
-  }
-  return DBFILEREQUESTSListV2;
-}
-
-+ (DBRoute *)DBFILEREQUESTSList {
   if (!DBFILEREQUESTSList) {
     DBFILEREQUESTSList = [[DBRoute alloc] init:@"list"
                                     namespace_:@"file_requests"
@@ -138,19 +123,17 @@ static DBRoute *DBFILEREQUESTSUpdate;
 }
 
 + (DBRoute *)DBFILEREQUESTSListV2 {
-  @synchronized(lockObj) {
-    if (!DBFILEREQUESTSListV2) {
-      DBFILEREQUESTSListV2 = [[DBRoute alloc] init:@"list_v2"
-                                        namespace_:@"file_requests"
-                                        deprecated:@NO
-                                        resultType:[DBFILEREQUESTSListFileRequestsV2Result class]
-                                         errorType:[DBFILEREQUESTSListFileRequestsError class]
-                                             attrs:@{@"auth" : @"user", @"host" : @"api", @"style" : @"rpc"}
-                             dataStructSerialBlock:nil
-                           dataStructDeserialBlock:nil];
-    }
-    return DBFILEREQUESTSListV2;
+  if (!DBFILEREQUESTSListV2) {
+    DBFILEREQUESTSListV2 = [[DBRoute alloc] init:@"list_v2"
+                                      namespace_:@"file_requests"
+                                      deprecated:@NO
+                                      resultType:[DBFILEREQUESTSListFileRequestsV2Result class]
+                                       errorType:[DBFILEREQUESTSListFileRequestsError class]
+                                           attrs:@{@"auth" : @"user", @"host" : @"api", @"style" : @"rpc"}
+                           dataStructSerialBlock:nil
+                         dataStructDeserialBlock:nil];
   }
+  return DBFILEREQUESTSListV2;
 }
 
 + (DBRoute *)DBFILEREQUESTSListContinue {

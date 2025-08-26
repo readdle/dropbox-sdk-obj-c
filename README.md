@@ -168,7 +168,7 @@ brew install carthage
 
 ```
 # ObjectiveDropboxOfficial
-github "https://github.com/dropbox/dropbox-sdk-obj-c" ~> 7.3.1
+github "https://github.com/dropbox/dropbox-sdk-obj-c" ~> 7.4.1
 ```
 
 To integrate the Dropbox Objective-C SDK into your project, take the following steps:
@@ -317,7 +317,7 @@ Please ensure that the supplied view controller is the top-most controller, so t
   [DBClientsManager authorizeFromControllerV2:[UIApplication sharedApplication]
                                    controller:[[self class] topMostController]
                         loadingStatusDelegate:nil
-                                      openURL:^(NSURL *url) { [[UIApplication sharedApplication] openURL:url]; }
+                                      openURL:^(NSURL *url) { [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:nil]; }
                                  scopeRequest:scopeRequest];
 }
 
